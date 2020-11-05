@@ -1,0 +1,23 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-canvas{
+    border: 1px solid black;
+    background-image: url('./images/castle_background.jpg');
+}
+
+#hidden_character{
+    display: none;
+}
+
+#castle-tileset{
+    display: none;
+}
