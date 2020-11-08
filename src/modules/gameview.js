@@ -11,13 +11,25 @@ class GameView{
     }
 
     play(){
-        let that = this;
-        setInterval(()=> {
-            that.game.move();
-            that.game.draw(that.ctx);
-        }, INTERVAL);
+        let playing = setInterval(() => {
+            if(this.game.mainCharacter.health > 0){
+                this.game.move();
+                this.game.draw(this.ctx);
+            } else {
+                for(let i = 0; i < 45; i ++){
+                    setTimeout(() => {
+                        this.game.move();
+                        this.game.draw(this.ctx);
+                    },INTERVAL);
+                }
+                let img = document.getElementsByClassName('you-died-img')[0].id = 'you-died-img-displayed';
+                let audio = document.getElementById('you-died-audio');
+                audio.volume = 0.025;
+                audio.play();
+                clearInterval(playing);
+            }
+        },INTERVAL);
     }
-    
 }
 
 

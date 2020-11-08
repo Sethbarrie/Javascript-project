@@ -3,7 +3,9 @@ import {
     TILE_SHEET_KEY,
     WINDOW_HEIGHT,
     WINDOW_WIDTH,
-    TILE_SIZE
+    TILE_SIZE,
+    HEIGHT,
+    WIDTH
 } from './constants';
 
 class Collision{
@@ -49,12 +51,12 @@ class Collision{
         value = collisionMap[top * 32 + right];
         this.collision(value, character, (right * 32), (top * 32) )
 
-        top = Math.floor((character.getTop() + 25) / 32);
+        top = Math.floor((character.getTop() + (HEIGHT / 2)) / 32);
         left = Math.floor((character.getLeft()) / 32);
         value = collisionMap[top * 32 + left];
         this.collision(value, character, (left * 32), (top * 32) )
 
-        top = Math.floor((character.getTop() + 25) / 32);
+        top = Math.floor((character.getTop() + (HEIGHT / 2)) / 32);
         right = Math.floor((character.getRight()) / 32);
         value = collisionMap[top * 32 + right];
         this.collision(value, character, (right * 32), (top * 32) )
@@ -86,6 +88,7 @@ class Collision{
                 this.collideRight(character, x);
                 break;
             case 4:
+                // debugger
                 this.collideTop(character, y);
                 break;        
             case 5:
@@ -99,14 +102,28 @@ class Collision{
                 this.collideBottom(character, y);
                 break;
             case 7:
+                if(this.collideTop(character, y)) return;
+                if(this.collideBottom(character, y)) return;
+                this.collideLeft(character, x);
                 break;
             case 8:
+                if(this.collideTop(character, y)) return;
+                if(this.collideBottom(character, y)) return;
+                this.collideRight(character, x);
                 break;
             case 9:
+                if(this.collideBottom(character, y)) return;
+                this.collideLeft(character, x);
                 break;
             case 10:
+                // debugger
+                if(this.collideRight(character, x)) return;
+                this.collideLeft(character, x);
                 break;        
             case 11:
+                this.collideTop(character, y);
+                if(this.collideLeft(character, x)) return;
+                this.collideRight(character, x);
                 break;
             case 12:
                 break;
@@ -133,8 +150,8 @@ class Collision{
 
 
     collideTop(character, y){
-        if((character.getTop()) < y + 32 && character.getOldTop() >= y + 32){
-            character.setTop(y + 32);
+        if((character.getTop()) < y + TILE_SIZE && character.getOldTop() >= y + TILE_SIZE){
+            character.setTop(y + TILE_SIZE);
             character.jumping = false;
             character.setYVelocity(0);
             return true;
@@ -143,6 +160,7 @@ class Collision{
     }
 
     collideBottom(character, y){
+        // debugger
         if((character.getBottom()) > y && character.getOldBottom() <= y){
             character.setBottom(y);
             character.jumping = false;
@@ -164,13 +182,18 @@ class Collision{
     
     collideRight(character, x){
         // debugger
-        if((character.getLeft()) < x + 32 && character.getOldLeft() >= x + 32){
-            character.setLeft(x + 32);
+        if((character.getLeft()) < x + TILE_SIZE && character.getOldLeft() >= x + TILE_SIZE){
+            character.setLeft(x + TILE_SIZE);
             character.setXVelocity(0);
             return true;
         }
         return false;    
     }
+
+    enemyCollision(mainCharacter, enemy){
+        return false;
+    }
+
 
 }
 

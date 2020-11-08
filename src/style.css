@@ -21,3 +21,42 @@ body{
 #castle-tileset{
     display: none;
 }
+
+#main-character-tileset{
+    display: none;
+}
+
+#main-character-reversed-tileset{
+    display: none;
+}
+
+#skeleton1-tileset{
+    display: none;
+}
+
+#skeleton2-tileset{
+    display: none;
+}
+
+#skeleton3-tileset{
+    display: none;
+}
+
+.you-died-img{
+    position: absolute;
+    opacity: 0;
+}
+
+#you-died-img-displayed{
+    height: 768px;
+    width: 1024px;
+    top: 0;
+    left: auto;
+    right: auto;
+    opacity: 1;
+    transition: 1600ms;
+}
+
+#you-died-audio{
+    display: none;
+}

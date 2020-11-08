@@ -1,127 +1,196 @@
-import Sword from './sword';
-import Tilesheet from './tilesheet';
 import {
-    SPEED,
-    GRAVITY,
-    JUMP_HEIGHT,
-    FRICTION, 
     HEIGHT,
     WIDTH,
-    WINDOW_HEIGHT,
-    WINDOW_WIDTH,
-    TILE_SIZE,
-    ACTIVE_KEYS
-} from './constants';
+    ACTIVE_KEYS,
+    ANIMATION_FRAMES_MC,
+    PLAYER_SPRITE_SHEET,
+    PLAYER_SPRITE_SHEET_REVERSED,
+    HEALTH,
+    START_X,
+    START_Y,
+    STARTING_STATUS,
+    ANIMATION_BUFFER,
+    MAIN_CHARACTER
 
-class Character {
-    constructor(){
-        this.height = HEIGHT;
-        this.width = WIDTH;
-        this.health = 10;
-        this.x = 20;
-        this.y = 686;
-        this.old_x = 20;
-        this.old_y = 686;
+} from './constants';
+import MovingObject from './moving_object';
+import Tilesheet from './tilesheet';
+
+class Character extends MovingObject{
+    constructor(object){
+        super();
+        let {speed,gravity,jump_height,friction,height,width,health,start_x,start_y,starting_status,animation_buffer, sprite_sheet, sprite_sheet_reversed, animation_frames} = MAIN_CHARACTER
+        // debugger
+        this.image = PLAYER_SPRITE_SHEET();
+        this.invertedImage = PLAYER_SPRITE_SHEET_REVERSED();
+        this.sprite = new Tilesheet(32, 32, 32, ANIMATION_FRAMES_MC, sprite_sheet(), sprite_sheet_reversed());
+        this.health = health;
+        this.height = height;
+        this.width = width;
+        this.x = start_x;
+        this.y = start_y;
+        this.old_x = start_x;
+        this.old_y = start_y;
         this.x_velocity = 0;
         this.y_velocity = 0;
         this.jumping = false;
         this.jumpingBuffer = true;
         this.swinging = false;
-        this.swordDropping = false;
-        this.swingFrame = 0;
-        this.sword = new Sword();
+        this.inverted = false;
+        this.oldStatus = starting_status;
+        this.status = starting_status;
+        this.animationFrame = 0;
+        this.animation_frames = animation_frames;
+        this.animationBuffer = animation_buffer;
         setKeyBinding();
+        this.animationSelection = this.animationSelection.bind(this);
+        this.animationStatus = this.animationStatus.bind(this);
+
     }
 
     move(){
-        this.jump()
-        // if((ACTIVE_KEYS[" "] && !this.jumping) && this.y_velocity === 0 
-        // || (ACTIVE_KEYS["ArrowUp"] && !this.jumping) && this.y_velocity === 0){
-        //     this.y_velocity -= JUMP_HEIGHT;
-        //     this.jumping = true;
-        //     ACTIVE_KEYS[" "] = false;
-        // };
+        this.jump();
         if(ACTIVE_KEYS['a'] || ACTIVE_KEYS['ArrowLeft']){
-            this.x_velocity -= SPEED;
+            this.moveLeft();
         }
         if(ACTIVE_KEYS['d'] || ACTIVE_KEYS['ArrowRight']){
-            this.x_velocity += SPEED;
+            this.moveRight();
         }
-
-        this.y_velocity += GRAVITY;
-        this.x_velocity *= FRICTION;
-        this.y_velocity *= FRICTION;
-        
-        this.old_x = this.x;
-        this.x += this.x_velocity;
-        this.old_y = this.y;
-        this.y += this.y_velocity;
-        
-
-        // if(ACTIVE_KEYS['Shift']){
-        //     if(!this.swinging){
-        //         this.swinging = true;
-        //         this.swingFrame = 10;
-        //     } else {
-        //         this.swingFrame -= 1;
-        //     }
-        // }
-        // if(this.swingFrame <= 0){
-        //     this.swinging = false;
-        // }
-    };
-
-    jump(){
-        if(ACTIVE_KEYS[" "] && !this.jumping && this.y_velocity === 0 && this.jumpingBuffer){
-            this.y_velocity -= JUMP_HEIGHT;
-            this.jumping = true;
-            this.jumpingBuffer = false;
-            ACTIVE_KEYS[" "] = false;
-            return;
-        };
-        if(ACTIVE_KEYS["ArrowUp"] && !this.jumping && this.y_velocity === 0 && this.jumpingBuffer){
-            this.y_velocity -= JUMP_HEIGHT;
-            this.jumping = true;
-            this.jumpingBuffer = false;
-            ACTIVE_KEYS[" "] = false;
-            return;
-        };
-        if(!ACTIVE_KEYS[" "] && !this.jumping && this.y_velocity === 0 && !this.jumpingBuffer && !ACTIVE_KEYS['ArrowUp']){
-            this.jumpingBuffer = true
-        };
-        if(!ACTIVE_KEYS["ArrowUp"] && !this.jumping && this.y_velocity === 0 && !this.jumpingBuffer && !ACTIVE_KEYS[" "]){
-            this.jumpingBuffer = true
-        };
-    };
+        if(ACTIVE_KEYS['k'] || ACTIVE_KEYS['Delete']){
+            this.health = 0;
+        }
+        this.swing();
+        this.update();
+        this.setInversion();
+        this.animationStatus();
+        this.animationSelection();
+    }
 
     draw(ctx){
         // this.swinging ? this.sword.swing(ctx, this.x, this.y) : null;
-        ctx.fillStyle = 'red';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        // ctx.fillStyle = 'red';
+        // ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.sprite.draw(
+            ctx, 
+            this.status, 
+            this.animationFrame,
+            this.inverted ? this.x -25: this.x , // this is to set the hitbox smaller only on the left side while facing left
+            this.y - 25, // this is to offset the size difference of the hitbox
+            WIDTH + 25, // this is to make the player wider but have the hitbox small
+            HEIGHT + 25, //this is to make the player taller but have the hitbox small
+            this.inverted
+        );
     };
 
-    getTop(){return this.y};
-    getBottom(){return this.y + this.height};
-    getLeft(){return this.x};
-    getRight(){return this.x + this.width};
-    
-    getOldTop(){return this.old_y};
-    getOldBottom(){return this.old_y + this.height};
-    getOldLeft(){return this.old_x};
-    getOldRight(){return this.old_x + this.width};
-    
-    setTop(y){this.y = y};
-    setBottom(y){this.y = y - this.height};
-    setLeft(x){this.x = x};
-    setRight(x){this.x = x - this.width};
-    
-    setOldTop(y){this.old_y = y};
-    setOldBottom(y){this.old_y = y - this.height};
-    setOldLeft(x){this.old_x = x};
-    setOldRight(x){this.old_x = x - this.width};
+    jump(){
+        if(
+            ACTIVE_KEYS[" "] 
+            && !this.jumping 
+            && this.y_velocity === 0 
+            && this.jumpingBuffer){
+                super.jump();
+                this.jumping = true;
+                this.jumpingBuffer = false;
+                ACTIVE_KEYS[" "] = false;
+                return;
+        };
+        if(
+            ACTIVE_KEYS["ArrowUp"] 
+            && !this.jumping 
+            && this.y_velocity === 0 
+            && this.jumpingBuffer){
+                super.jump();
+                this.jumping = true;
+                this.jumpingBuffer = false;
+                ACTIVE_KEYS[" "] = false;
+                return;
+        };
+        if(
+            !ACTIVE_KEYS[" "] 
+            && !this.jumping 
+            && this.y_velocity === 0 
+            && !this.jumpingBuffer 
+            && !ACTIVE_KEYS['ArrowUp']){
+                this.jumpingBuffer = true
+        };
+        if(
+            !ACTIVE_KEYS["ArrowUp"] 
+            && !this.jumping 
+            && this.y_velocity === 0 
+            && !this.jumpingBuffer 
+            && !ACTIVE_KEYS[" "]){
+                this.jumpingBuffer = true
+        };
+    };
 
-    setXVelocity(x){this.x_velocity = x};
-    setYVelocity(y){this.y_velocity = y};
+    swing(){
+        debugger
+        if(ACTIVE_KEYS["Shift"]){
+            this.swinging = true;
+            // if(!ACTIVE_KEYS['ArrowLeft'] || !ACTIVE_KEYS['ArrowRight'] || !ACTIVE_KEYS['a'] || !ACTIVE_KEYS['d']){
+            //     this.setXVelocity(0);
+            // }
+        } else {
+            this.swinging = false;
+        }
+    }
+
+
+
+    animationStatus(){
+        // debugger
+        if(this.health <= 0){
+            this.updateStatus(this.animation_frames['dead']);
+            return;
+        }
+        let damage = false;
+        if(damage){
+            this.updateStatus(this.animation_frames['damaged']);
+            return;
+        }
+        if(this.swinging){
+            this.updateStatus(this.animation_frames['attack']);
+            return;
+        }
+        // if(this.getYVelocity() > 0){
+        //     this.updateStatus(this.animation_frames['fall']);
+        //     return;
+        // }
+        if(this.jumping){
+            this.updateStatus(this.animation_frames['jump']);
+            return;
+        }
+        if(Math.floor(this.getXVelocity())){
+            this.updateStatus(this.animation_frames['run']);
+            return;
+        }
+        if(Math.floor(this.getXVelocity() * -1)){
+            this.updateStatus(this.animation_frames['run']);
+            return;
+        }
+        this.updateStatus(this.animation_frames['idle']);
+    }
+
+    animationSelection(){
+        // debugger
+        if(this.status === this.oldStatus){
+            if(this.animationBuffer > 0){
+                this.animationBuffer -= 1;
+            } else {
+                this.animationFrame = ((this.animationFrame + 1) % (this.status.frames.length));
+                this.animationBuffer = 7; 
+            }
+        } else {
+            this.animationFrame = 0;
+            this.animationBuffer = 7;
+        }
+        if(this.status['status'] === 'attack' && this.animationFrame === 5){
+            this.swinging = false;
+        };
+    }
+
+
+
 }
 
 const setKeyBinding = () => {
@@ -155,6 +224,9 @@ const setKeyBinding = () => {
                 ACTIVE_KEYS[e.key] = true;
                 break;
             case('Shift'):
+                ACTIVE_KEYS[e.key] = true;
+                break;
+            case('k'):
                 ACTIVE_KEYS[e.key] = true;
                 break;
             default:

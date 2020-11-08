@@ -4,9 +4,18 @@
     <script src="dist/main.js"></script>
     <link rel="stylesheet" href="src/style.css">
 </head>
-<body>
+<body ondragstart="return false">
+    <img src="./src/images/32-knight-normal.png" id="main-character-tileset">
+    <img src="./src/images/32-knight-reversed.png" id="main-character-reversed-tileset">
     <img src="./src/images/hidden_character.png" id='hidden_character'>
     <img src="./src/images/tile_castle_grey.png" id='castle-tileset'>
+    <img src="./src/images/skeleton_attack.png" id="skeleton1-tileset">
+    <img src="./src/images/skeleton_dead.png" id="skeleton2-tileset">
+    <img src="./src/images/skeleton_walk.png" id="skeleton3-tileset">
+    <img src="./src/images/you_died.jpg" class='you-died-img'>
+
+    <audio src='./src/mp3s/you_died.mp3' id='you-died-audio'></audio>
+
     <canvas id="game-canvas" height="768" width="1024" background-img='./'></canvas>
 </body>
 </html>
