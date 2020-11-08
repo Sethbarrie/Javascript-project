@@ -24,11 +24,16 @@ class Game {
         let enemies = Object.values(this.sprites);
         if(enemies.length > 0){
             enemies.forEach( enemy => {
-                this.collision.enemyCollision(this.sprites.mainCharacter, enemy);
+                if(this.collision.enemyCollision(this.mainCharacter, enemy) && enemy.health > 0){
+                    if(this.collision.swordCollision(this.mainCharacter, enemy)){
+                        if(enemy.health > 0){
+                            enemy.health -= 1;
+                        }
+                    } else if(this.mainCharacter.damageCounter === 60) {
+                        this.mainCharacter.damage = true; 
+                    }
+                };
             });
-            // enemies.forEach( enemy => {
-            //     enemy.move();
-            // });
         }
         this.mainCharacter.move(this.sprites.mainCharacter);
         // this.collision.collisionDetection(this.sprites.mainCharacter);
@@ -39,7 +44,7 @@ class Game {
         ctx.clearRect(0,0,WINDOW_WIDTH, WINDOW_HEIGHT);
         this.viewport.scrollingScreen(ctx, this.mainCharacter);
         enemies.forEach( enemy => {
-            enemy.draw(ctx);        
+            enemy.draw(ctx);
         });
         this.mainCharacter.draw(ctx);
         ctx.imageSmoothingEnabled = false;

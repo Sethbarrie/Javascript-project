@@ -191,7 +191,60 @@ class Collision{
     }
 
     enemyCollision(mainCharacter, enemy){
-        return false;
+        if(
+            mainCharacter.getLeft() < enemy.getRight() && enemy.getRight() < mainCharacter.getRight() ||
+            mainCharacter.getRight() > enemy.getLeft() && enemy.getLeft() > mainCharacter.getLeft()
+        ){  
+            if(
+                mainCharacter.getTop() < enemy.getBottom() && enemy.getBottom() < mainCharacter.getBottom() ||
+                mainCharacter.getBottom() < enemy.getTop() && enemy.getTop() > mainCharacter.getTop()
+            ){
+                return true;
+            } else{
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    swordCollision(mainCharacter, enemy){
+        if(!mainCharacter.swinging){
+            return false;
+        }
+        if(mainCharacter.inverted){
+            if(
+                mainCharacter.getLeft() - 16 < enemy.getRight() && enemy.getRight() < mainCharacter.getRight() ||
+                mainCharacter.getRight() > enemy.getLeft() && enemy.getLeft() > mainCharacter.getLeft()
+            ){  
+                if(
+                    mainCharacter.getTop() < enemy.getBottom() && enemy.getBottom() < mainCharacter.getBottom() ||
+                    mainCharacter.getBottom() < enemy.getTop() && enemy.getTop() > mainCharacter.getTop()
+                ){
+                    return true;
+                } else{
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }else {
+            if(
+                mainCharacter.getSwordLeft() < enemy.getRight() && enemy.getRight() < mainCharacter.getSwordRight() ||
+                mainCharacter.getRight() > enemy.getLeft() && enemy.getLeft() > mainCharacter.getSwordLeft()
+            ){  
+                if(
+                    mainCharacter.getSwordTop() < enemy.getBottom() && enemy.getBottom() < mainCharacter.getSwordBottom() ||
+                    mainCharacter.getSwordBottom() < enemy.getTop() && enemy.getTop() > mainCharacter.getSwordTop()
+                ){
+                    return true;
+                } else{
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
     }
 
 

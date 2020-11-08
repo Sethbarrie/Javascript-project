@@ -14,7 +14,7 @@ body{
     background-image: url('./images/castle_background.jpg');
 }
 
-#hidden_character{
+#hidden_character-tileset{
     display: none;
 }
 
@@ -26,19 +26,7 @@ body{
     display: none;
 }
 
-#main-character-reversed-tileset{
-    display: none;
-}
-
-#skeleton1-tileset{
-    display: none;
-}
-
-#skeleton2-tileset{
-    display: none;
-}
-
-#skeleton3-tileset{
+#skeleton-tileset{
     display: none;
 }
 

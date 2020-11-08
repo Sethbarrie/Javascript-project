@@ -22,8 +22,7 @@ class Character extends MovingObject{
         let {speed,gravity,jump_height,friction,height,width,health,start_x,start_y,starting_status,animation_buffer, sprite_sheet, sprite_sheet_reversed, animation_frames} = MAIN_CHARACTER
         // debugger
         this.image = PLAYER_SPRITE_SHEET();
-        this.invertedImage = PLAYER_SPRITE_SHEET_REVERSED();
-        this.sprite = new Tilesheet(32, 32, 32, ANIMATION_FRAMES_MC, sprite_sheet(), sprite_sheet_reversed());
+        this.sprite = new Tilesheet(32, 32, 32, ANIMATION_FRAMES_MC, sprite_sheet());
         this.health = health;
         this.height = height;
         this.width = width;
@@ -33,6 +32,8 @@ class Character extends MovingObject{
         this.old_y = start_y;
         this.x_velocity = 0;
         this.y_velocity = 0;
+        this.damage = false;
+        this.damageCounter = 60;
         this.jumping = false;
         this.jumpingBuffer = true;
         this.swinging = false;
@@ -61,7 +62,7 @@ class Character extends MovingObject{
         }
         this.swing();
         this.update();
-        this.setInversion();
+        this.setInversion(this.image.height / 2);
         this.animationStatus();
         this.animationSelection();
     }
@@ -124,7 +125,6 @@ class Character extends MovingObject{
     };
 
     swing(){
-        debugger
         if(ACTIVE_KEYS["Shift"]){
             this.swinging = true;
             // if(!ACTIVE_KEYS['ArrowLeft'] || !ACTIVE_KEYS['ArrowRight'] || !ACTIVE_KEYS['a'] || !ACTIVE_KEYS['d']){
@@ -138,21 +138,33 @@ class Character extends MovingObject{
 
 
     animationStatus(){
-        // debugger
         if(this.health <= 0){
             this.updateStatus(this.animation_frames['dead']);
             return;
         }
-        let damage = false;
-        if(damage){
+        if(this.damage && this.damageCounter === 60){
+            this.health -= 1;
+            this.damageCounter -= 1
             this.updateStatus(this.animation_frames['damaged']);
             return;
+        }
+        if(this.damage && this.damageCounter < 60 && this.damage && this.damageCounter >= 40){
+            this.damageCounter -= 1
+            this.updateStatus(this.animation_frames['damaged']);
+            return;
+        }
+        if(this.damage && this.damageCounter < 40 && this.damage > 0){
+            this.damageCounter -= 1;
+        }
+        if(this.damage && this.damageCounter <= 0){
+            this.damage = false;
+            this.damageCounter = 60;
         }
         if(this.swinging){
             this.updateStatus(this.animation_frames['attack']);
             return;
         }
-        // if(this.getYVelocity() > 0){
+        // if(this.getYVelocity() > .2){
         //     this.updateStatus(this.animation_frames['fall']);
         //     return;
         // }
@@ -164,15 +176,25 @@ class Character extends MovingObject{
             this.updateStatus(this.animation_frames['run']);
             return;
         }
-        if(Math.floor(this.getXVelocity() * -1)){
-            this.updateStatus(this.animation_frames['run']);
-            return;
-        }
+        // if(this.getXVelocity() < 0 || Math.floor(this.getXVelocity() * -1)){
+        //     this.updateStatus(this.animation_frames['run']);
+        //     return;
+        // }
         this.updateStatus(this.animation_frames['idle']);
     }
 
     animationSelection(){
-        // debugger
+        // if(this.status['status'] === 'dead'){
+        //     if(this.animationBuffer > 0){
+        //         this.animationBuffer -= 1;
+        //     } else if( this.animationFrame === this.status.frames.length - 1){
+        //         this.animationFrame = this.status.frames.length
+        //     } else {
+        //         if(this.animationFrame > this.status.frames.length - 2)
+        //         this.animationFrame = ((this.animationFrame + 1));
+        //         this.animationBuffer = 7; 
+        //     }  
+        // } else 
         if(this.status === this.oldStatus){
             if(this.animationBuffer > 0){
                 this.animationBuffer -= 1;

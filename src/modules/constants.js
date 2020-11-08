@@ -18,19 +18,9 @@ import {
 export const PLAYER_SPRITE_SHEET = () => {
     return document.getElementById('main-character-tileset');
 };
-export const PLAYER_SPRITE_SHEET_REVERSED = () => {
-    return document.getElementById('main-character-reversed-tileset');
+export const SKELETON_SPRITE_SHEET = () => {
+    return document.getElementById('skeleton-tileset');
 };
-export const SKELETON_ATTACK_SPRITE_SHEET = () => {
-    return document.getElementById('skeleton1-tileset');
-};
-export const SKELETON_DEAD_SPRITE_SHEET = () => {
-    return document.getElementById('skeleton2-tileset');
-};
-export const SKELETON_WALK_SPRITE_SHEET = () => {
-    return document.getElementById('skeleton3-tileset');
-};
-
 export const WORLD_SPRITE_SHEET = () => {
     return document.getElementById('castle-tileset');
 };
@@ -109,57 +99,87 @@ export const ANIMATION_FRAMES_MC = {
     'idle': {
         status: 'idle',
         row: 0, 
-        frames: [0,1,2,3]
+        frames: [0,1,2,3],
+        width: 32,
+        height: 32,
+        offset: 0
     },
     'run': {
         status: 'run',
         row: 1, 
-        frames: [0,1,2,3,4,5,6,7]
+        frames: [0,1,2,3,4,5,6,7],
+        width: 32,
+        height: 32,
+        offset: 32
     },
     'jump': {
         status: 'jump',
         row: 2, 
-        frames: [0,1,2]
+        frames: [0,1,2],
+        width: 32,
+        height: 32,
+        offset: 64
     },
     'fall': {
         status: 'fall',
         row: 3, 
-        frames: [0,1]
+        frames: [0,1],
+        width: 32,
+        height: 32,
+        offset: 96
     },
     'attack': {
         status: 'attack',
         row: 4, 
-        frames: [0,1,2,3,4,5]
+        frames: [0,1,2,3,4,5],
+        width: 32,
+        height: 32,
+        offset: 128
     },
     'damaged': {
         status: 'damaged',
         row: 5, 
-        frames: [0]
+        frames: [0],
+        width: 32,
+        height: 32,
+        offset: 160
     },
     'dead': {
         status: 'dead',
         row: 6, 
-        frames: [0,1,2,3,4,5,6]
+        frames: [0,1,2,3,4,5,6],
+        width: 32,
+        height: 32,
+        offset: 192
     }
 }
 
 
-//sprite key for MC knight
+//sprite key for skeleton
 export const ANIMATION_FRAMES_SKELETON = {
     'run': {
         status: 'run',
         row: 0, 
-        frames: [0,1,2,3,4,5,6,7,8,9,10,11,12]
+        frames: [0,1,2,3,4,5,6,7,8,9,10,11,12],
+        width: 22,
+        height: 33,
+        offset: 0
     },
     'attack': {
         status: 'attack',
-        row: 0, 
-        frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
+        row: 1, 
+        frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],
+        width: 43,
+        height: 37,
+        offset: 33
     },
     'dead': {
         status: 'dead',
-        row: 0, 
-        frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+        row: 2, 
+        frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+        width: 33,
+        height: 32,
+        offset: 77
     }
 }
 
@@ -190,7 +210,6 @@ export const MAIN_CHARACTER = {
     starting_status: 'idle',
     animation_buffer: 10,
     sprite_sheet: PLAYER_SPRITE_SHEET,
-    sprite_sheet_reversed: PLAYER_SPRITE_SHEET_REVERSED,
     animation_frames: ANIMATION_FRAMES_MC,
 
 }

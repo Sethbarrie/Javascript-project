@@ -16,7 +16,7 @@ class GameView{
                 this.game.move();
                 this.game.draw(this.ctx);
             } else {
-                for(let i = 0; i < 45; i ++){
+                for(let i = 0; i < 90; i ++){
                     setTimeout(() => {
                         this.game.move();
                         this.game.draw(this.ctx);

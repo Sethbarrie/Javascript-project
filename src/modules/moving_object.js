@@ -62,16 +62,33 @@ class MovingObject{
     setXVelocity(x){this.x_velocity = x};
     setYVelocity(y){this.y_velocity = y};
 
-    setInversion(){
+    setInversion(offset){
         if(this.getXVelocity() === 0){
             return;
         }
         if(this.getXVelocity() < 0){
-            this.inverted = true;
+            this.inverted = offset;
         } else {
-            this.inverted = false;
+            this.inverted = 0;
         }
     }
+
+    getSwordTop(){return this.y};
+    getSwordBottom(){return this.y + this.height};
+    getSwordLeft(){
+        if(this.inverted){
+            return this.x;
+        } else {
+            return this.x -16;
+        }
+    };
+    getSwordRight(){
+        if(this.inverted){
+            return this.x + this.width - 16;
+        } else {
+            return this.x + this.width;
+        }
+    };
 
 
     update(){
