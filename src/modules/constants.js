@@ -24,6 +24,9 @@ export const SKELETON_SPRITE_SHEET = () => {
 export const WORLD_SPRITE_SHEET = () => {
     return document.getElementById('castle-tileset');
 };
+export const HEALTH_SPRITE_SHEET = () => {
+    return document.getElementById('health-tileset');
+}
 
 
 
@@ -183,6 +186,99 @@ export const ANIMATION_FRAMES_SKELETON = {
     }
 }
 
+
+// 11: [224,32,32,32,32,32], // wall 1/2 height gray on top
+// 'idle': {
+//     status: 'idle',
+//     row: 0, 
+//     frames: [0,1,2,3],
+//     width: 32,
+//     height: 32,
+//     offset: 0
+// },
+export const HEALTH_TILE_KEY = {
+    
+    '0': {
+        offset: 0,
+        width: 600,
+        height: 600
+    },
+    '1': {
+        frame: 25.9,
+        offset: 0,
+        width: 50,
+        height: 100,
+        x: 54,
+        y: 58
+    },
+    '2': {
+        frame: 27,
+        offset: 0,
+        width: 50,
+        height: 100,
+        x: 72,
+        y: 58
+    },
+    
+    
+    '3': {
+        frame: 11.95,
+        offset: 0,
+        width: 100,
+        height: 100,
+        x: 53,
+        y: 58
+    },
+    '4': {
+        frame: 10.95,
+        offset: 0,
+        width: 100,
+        height: 100,
+        x: 53,
+        y: 13
+    },
+    '5': {
+        frame: 9.95,
+        offset: 0,
+        width: 100,
+        height: 100,
+        x: 10,
+        y: 33
+    },
+    '6': {
+        frame: 8.95,
+        offset: 0,
+        width: 100,
+        height: 100,
+        x: 93,
+        y: 33
+    },
+    '7': {
+        frame: 7.97,
+        offset: 0,
+        width: 100,
+        height: 100,
+        x: 7,
+        y: 82
+    },
+    '8': {
+        frame: 7,
+        offset: 0,
+        width: 100,
+        height: 100,
+        x:99,
+        y: 82
+    },
+    '9': {
+        frame: 6,
+        offset: 0,
+        width: 100,
+        height: 100,
+        x: 53,
+        y: 102
+    }
+};
+
 //General info
 export const WINDOW_HEIGHT = 768;
 export const WINDOW_WIDTH = 1024;
@@ -204,9 +300,11 @@ export const MAIN_CHARACTER = {
     friction: .9,
     height: 50,
     width: 30,
-    health: 10,
+    health: 9,
     start_x: 48,
     start_y: 678,
+    weapon_x: 16,
+    weapon_y: 10,
     starting_status: 'idle',
     animation_buffer: 10,
     sprite_sheet: PLAYER_SPRITE_SHEET,
@@ -220,7 +318,7 @@ export const FRICTION = .9;
 export const HIGH_FRICTION = .1;
 export const HEIGHT = 50;
 export const WIDTH = 30;
-export const HEALTH = 10;
+export const HEALTH = 9;
 export const START_X = 48;
 export const START_Y = 678;
 export const STARTING_STATUS = 'idle';

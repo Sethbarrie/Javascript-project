@@ -14,26 +14,37 @@ import {
 
 class MovingObject{
 
-    // constructor(){
-    //     // let {speed,gravity,jump_height,friction,height,width,health,start_x,start_y,starting_status,animation_buffer, sprite_sheet, sprite_sheet_reversed, animation_frames} = object
-    //     this.health = health;
-    //     this.height = height;
-    //     this.width = width;
-    //     this.x = start_x;
-    //     this.y = start_y;
-    //     this.old_x = start_x;
-    //     this.old_y = start_y;
-    //     this.x_velocity = 0;
-    //     this.y_velocity = 0;
-    //     this.jumping = false;
-    //     this.jumpingBuffer = true;
-    //     this.swinging = false;
-    //     this.inverted = false;
-    //     this.oldStatus = starting_status;
-    //     this.status = starting_status;
-    //     this.animationFrame = 0;
-    //     this.animation_frames = animation_frames;
-    //     this.animationBuffer = animation_buffer;
+    // constructor(entity){
+    //     constructor(object){
+    //         super();
+    //         let {speed,gravity,jump_height,friction,height,width,health,start_x,start_y,starting_status,animation_buffer, sprite_sheet, sprite_sheet_reversed, animation_frames} = MAIN_CHARACTER
+    //         // debugger
+    //         this.image = PLAYER_SPRITE_SHEET();
+    //         this.sprite = new Tilesheet(32, 32, 32, ANIMATION_FRAMES_MC, sprite_sheet());
+    //         this.health = health;
+    //         this.height = height;
+    //         this.width = width;
+    //         this.x = start_x;
+    //         this.y = start_y;
+    //         this.old_x = start_x;
+    //         this.old_y = start_y;
+    //         this.x_velocity = 0;
+    //         this.y_velocity = 0;
+    //         this.damage = false;
+    //         this.damageCounter = 60;
+    //         this.jumping = false;
+    //         this.jumpingBuffer = true;
+    //         this.swinging = false;
+    //         this.inverted = false;
+    //         this.oldStatus = starting_status;
+    //         this.status = starting_status;
+    //         this.animationFrame = 0;
+    //         this.animation_frames = animation_frames;
+    //         this.animationBuffer = animation_buffer;
+    //         setKeyBinding();
+    //         this.animationSelection = this.animationSelection.bind(this);
+    //         this.animationStatus = this.animationStatus.bind(this);
+    //     }
     // }
 
     getTop(){return this.y};

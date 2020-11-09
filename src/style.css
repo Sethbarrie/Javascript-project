@@ -30,6 +30,10 @@ body{
     display: none;
 }
 
+#health-tileset{
+    display: none;
+}
+
 .you-died-img{
     position: absolute;
     opacity: 0;

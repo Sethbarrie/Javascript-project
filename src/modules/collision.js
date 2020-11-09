@@ -208,18 +208,18 @@ class Collision{
         }
     }
 
-    swordCollision(mainCharacter, enemy){
-        if(!mainCharacter.swinging){
+    swordCollision(attacker, opponent){
+        if(!attacker.swinging){
             return false;
         }
-        if(mainCharacter.inverted){
+        if(attacker.inverted){
             if(
-                mainCharacter.getLeft() - 16 < enemy.getRight() && enemy.getRight() < mainCharacter.getRight() ||
-                mainCharacter.getRight() > enemy.getLeft() && enemy.getLeft() > mainCharacter.getLeft()
+                attacker.getLeft() - 16 < opponent.getRight() && opponent.getRight() < attacker.getRight() ||
+                attacker.getRight() > opponent.getLeft() && opponent.getLeft() > attacker.getLeft()
             ){  
                 if(
-                    mainCharacter.getTop() < enemy.getBottom() && enemy.getBottom() < mainCharacter.getBottom() ||
-                    mainCharacter.getBottom() < enemy.getTop() && enemy.getTop() > mainCharacter.getTop()
+                    attacker.getTop() < opponent.getBottom() && opponent.getBottom() < attacker.getBottom() ||
+                    attacker.getBottom() < opponent.getTop() && opponent.getTop() > attacker.getTop()
                 ){
                     return true;
                 } else{
@@ -230,12 +230,12 @@ class Collision{
             }
         }else {
             if(
-                mainCharacter.getSwordLeft() < enemy.getRight() && enemy.getRight() < mainCharacter.getSwordRight() ||
-                mainCharacter.getRight() > enemy.getLeft() && enemy.getLeft() > mainCharacter.getSwordLeft()
+                attacker.getSwordLeft() < opponent.getRight() && opponent.getRight() < attacker.getSwordRight() ||
+                attacker.getRight() > opponent.getLeft() && opponent.getLeft() > attacker.getSwordLeft()
             ){  
                 if(
-                    mainCharacter.getSwordTop() < enemy.getBottom() && enemy.getBottom() < mainCharacter.getSwordBottom() ||
-                    mainCharacter.getSwordBottom() < enemy.getTop() && enemy.getTop() > mainCharacter.getSwordTop()
+                    attacker.getSwordTop() < opponent.getBottom() && opponent.getBottom() < attacker.getSwordBottom() ||
+                    attacker.getSwordBottom() < opponent.getTop() && opponent.getTop() > attacker.getSwordTop()
                 ){
                     return true;
                 } else{
@@ -246,7 +246,6 @@ class Collision{
             }
         }
     }
-
 
 }
 

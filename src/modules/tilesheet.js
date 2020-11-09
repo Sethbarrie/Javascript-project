@@ -12,20 +12,6 @@ class Tilesheet{
         this.tileKey = tileKey;
     }
 
-    // draw(ctx,tile_start_x, tile_start_y, tile_size_x, tile_size_y, img_pos_x, img_pos_y, img_width, img_height){
-    //     ctx.drawImage(
-    //         this.image,  //image source, aka tile sheet
-    //         tile_start_x, //starting position of the tile sheet for the x
-    //         tile_start_y, //starting position of the tile sheet for the y
-    //         tile_size_x, //how big the tilesheet image is for x
-    //         tile_size_y, //how big the tilesheet image is for y
-    //         img_pos_x,                  //where the image goes on the canvas for x
-    //         img_pos_y,                  //where the image goes on the canvas for y
-    //         img_width, //how big the image is on the canvas for x
-    //         img_height, //how big the image is on the canvas for y
-    //     )
-    // }
-
     draw(ctx, status, frame, posX, posY, spriteWidth, spriteHeight, inverted ){
         // debugger
         ctx.drawImage(
