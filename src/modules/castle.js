@@ -1,10 +1,10 @@
 import Tilesheet from './tilesheet';
 import {
     WORLD_SPRITE_SHEET,
-    TILE_SHEET_KEY,
     COLUMNS,
     TILE_SIZE
 } from './constants';
+import {TILE_SHEET_KEY} from './tile_keys';
 
 
 class Castle{

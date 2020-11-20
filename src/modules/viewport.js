@@ -15,8 +15,8 @@ class Viewport{
     }
 
     scrollingScreen(ctx, character){
-        if(character.getTop() < 0){
-            character.setTop(680);
+        if(character.positioning.getTop() < 0){
+            character.positioning.setTop(680);
             this.castle.level += 1;
             this.visibleMap = MAPS_LIST[this.castle.level].visualMap;
             this.currentCollisionMap = MAPS_LIST[this.castle.level].collisionMap;

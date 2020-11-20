@@ -2,50 +2,11 @@ import {
     SPEED,
     GRAVITY,
     JUMP_HEIGHT,
-    FRICTION, 
-    HEIGHT,
-    WIDTH,
-    WINDOW_HEIGHT,
-    WINDOW_WIDTH,
-    TILE_SIZE,
-    ACTIVE_KEYS
+    FRICTION
 } from './constants';
 
 
 class MovingObject{
-
-    // constructor(entity){
-    //     constructor(object){
-    //         super();
-    //         let {speed,gravity,jump_height,friction,height,width,health,start_x,start_y,starting_status,animation_buffer, sprite_sheet, sprite_sheet_reversed, animation_frames} = MAIN_CHARACTER
-    //         // debugger
-    //         this.image = PLAYER_SPRITE_SHEET();
-    //         this.sprite = new Tilesheet(32, 32, 32, ANIMATION_FRAMES_MC, sprite_sheet());
-    //         this.health = health;
-    //         this.height = height;
-    //         this.width = width;
-    //         this.x = start_x;
-    //         this.y = start_y;
-    //         this.old_x = start_x;
-    //         this.old_y = start_y;
-    //         this.x_velocity = 0;
-    //         this.y_velocity = 0;
-    //         this.damage = false;
-    //         this.damageCounter = 60;
-    //         this.jumping = false;
-    //         this.jumpingBuffer = true;
-    //         this.swinging = false;
-    //         this.inverted = false;
-    //         this.oldStatus = starting_status;
-    //         this.status = starting_status;
-    //         this.animationFrame = 0;
-    //         this.animation_frames = animation_frames;
-    //         this.animationBuffer = animation_buffer;
-    //         setKeyBinding();
-    //         this.animationSelection = this.animationSelection.bind(this);
-    //         this.animationStatus = this.animationStatus.bind(this);
-    //     }
-    // }
 
     getTop(){return this.y};
     getBottom(){return this.y + this.height};
@@ -73,6 +34,9 @@ class MovingObject{
     setXVelocity(x){this.x_velocity = x};
     setYVelocity(y){this.y_velocity = y};
 
+    getHeight(){return this.height}
+    getWidth(){return this.width}
+
     setInversion(offset){
         if(this.getXVelocity() === 0){
             return;
@@ -84,8 +48,11 @@ class MovingObject{
         }
     }
 
-    getSwordTop(){return this.y};
-    getSwordBottom(){return this.y + this.height};
+    getXOffset(){return this.characterXOffset}
+    getYOffset(){return this.characterYOffset}
+
+    getSwordTop(){return this.y + this.height};
+    getSwordBottom(){return this.y};
     getSwordLeft(){
         if(this.inverted){
             return this.x;
@@ -100,6 +67,18 @@ class MovingObject{
             return this.x + this.width;
         }
     };
+
+    swordActive(){
+        return this.status['status'] === 'attack';
+    }
+
+    swordHitbox(){
+        if(this.inverted){
+            return [this.getTop(), this.getLeft() - this.offSet]
+        } else {
+
+        }
+    }
 
 
     update(){
@@ -124,8 +103,74 @@ class MovingObject{
     moveRight(){
         this.setXVelocity(this.getXVelocity() + SPEED);
     }
-    crouch(){
 
+    damageEntity(){
+        this.status = this.status['damaged'];
+    }
+
+    damageStep(damage){
+        if(
+            this.damage 
+            && this.damageCounter === this.damageCounterReset){
+                this.health -= damage;
+                this.damageCounter --;
+                this.updateStatus(this.animation_frames['damaged']);
+                return;
+        }
+        if(
+            this.damage 
+            && this.damageCounter < this.damageCounterReset  
+            && this.damageCounter >= Math.floor(this.damageCounterReset * .66)){
+                this.damageCounter --;
+                this.updateStatus(this.animation_frames['damaged']);
+                return;
+        }
+        if(
+            this.damage 
+            && this.damageCounter < Math.floor(this.damageCounterReset * .66) 
+            && this.damage > 0){
+                this.damageCounter --;
+        }
+        if(this.damage && this.damageCounter <= 0){
+            this.damage = false;
+            this.damageCounter = this.damageCounterReset;
+        }
+    }
+    
+    dead(ctx){
+        if(this.delete === true){return}
+        if(this.animationBuffer > 0){
+            this.animationBuffer -= 1;
+            this.sprite.draw(
+                ctx,
+                this.status,
+                this.animationFrame,
+                this.x,
+                this.y,
+                this.width + this.getXOffset(),
+                this.height + this.getYOffset(),
+                this.inverted
+            )        } else {
+            if(this.animationFrame === this.status.frames.length - 1){
+                this.delete = true;
+                this.x = 0;
+                this.y = 0;
+                this.width = 0;
+                this.height = 0;
+            }
+            this.animationFrame = ((this.animationFrame + 1));
+            this.animationBuffer = this.animationBufferReset;
+            this.sprite.draw(
+                ctx,
+                this.status,
+                this.animationFrame,
+                this.x,
+                this.y,
+                this.width,
+                this.height,
+                this.inverted
+            )
+        }
     }
 
     updateStatus(newStatus){

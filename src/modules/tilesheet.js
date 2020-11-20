@@ -1,4 +1,8 @@
-import { TILE_SIZE } from "./constants";
+import { 
+    TILE_SIZE,
+    WINDOW_HEIGHT,
+    WINDOW_WIDTH
+} from "./constants";
 
 
 
@@ -13,7 +17,6 @@ class Tilesheet{
     }
 
     draw(ctx, status, frame, posX, posY, spriteWidth, spriteHeight, inverted ){
-        // debugger
         ctx.drawImage(
             this.image,
             frame * status['width'], //starting position of the tile sheet for the x
@@ -42,7 +45,6 @@ class Tilesheet{
             this.tileKey[tile][5], //how big the image is on the canvas for y
         )
     }
-
 }
 
 export default Tilesheet;

@@ -13,81 +13,122 @@ import {
     MAIN_CHARACTER
 
 } from './constants';
+import {setKeyBinding} from './controls';
 import MovingObject from './moving_object';
+import Positioner from './positioner';
 import Tilesheet from './tilesheet';
 
 class Character extends MovingObject{
     constructor(object){
         super();
-        let {speed,gravity,jump_height,friction,height,width,health,start_x,start_y,starting_status,animation_buffer, sprite_sheet, sprite_sheet_reversed, animation_frames} = MAIN_CHARACTER
-        // debugger
+        let {
+            height
+            ,width
+            ,characterOffset
+            ,start_x
+            ,start_y
+            ,health
+            ,characterXOffset
+            ,characterYOffset
+            ,starting_status
+            ,animation_buffer
+            ,sprite_sheet
+            ,animation_frames
+        } = object
         this.image = PLAYER_SPRITE_SHEET();
-        this.sprite = new Tilesheet(32, 32, 32, ANIMATION_FRAMES_MC, sprite_sheet());
-        this.health = health;
+        setKeyBinding();
+        //sprite and positioning
+        this.sprite = new Tilesheet(32, 32, 32, animation_frames, sprite_sheet());
+        this.position = new Positioner(start_x, start_y, width, height, characterXOffset, characterYOffset);
+        // this.jump = new Jump(jump_height,);
+        
         this.height = height;
         this.width = width;
         this.x = start_x;
         this.y = start_y;
         this.old_x = start_x;
         this.old_y = start_y;
+        this.characterXOffset = characterXOffset;
+        this.characterYOffset = characterYOffset;        
         this.x_velocity = 0;
         this.y_velocity = 0;
+        
+        
+        //status trackers for character
+        this.health = health;
         this.damage = false;
         this.damageCounter = 60;
+        this.damageCounterReset = 60;
         this.jumping = false;
         this.jumpingBuffer = true;
         this.swinging = false;
         this.inverted = false;
         this.oldStatus = starting_status;
         this.status = starting_status;
+        //frame trackers for character
         this.animationFrame = 0;
         this.animation_frames = animation_frames;
         this.animationBuffer = animation_buffer;
-        setKeyBinding();
+        this.delete = false;
         this.animationSelection = this.animationSelection.bind(this);
         this.animationStatus = this.animationStatus.bind(this);
 
     }
 
     move(){
-        this.jump();
-        if(ACTIVE_KEYS['a'] || ACTIVE_KEYS['ArrowLeft']){
-            this.moveLeft();
+        if(this.status['status'] !== 'dead'){
+            this.jump();
+            if(ACTIVE_KEYS['a'] || ACTIVE_KEYS['ArrowLeft']){
+                this.moveLeft();
+            }
+            if(ACTIVE_KEYS['d'] || ACTIVE_KEYS['ArrowRight']){
+                this.moveRight();
+            }
+            if(ACTIVE_KEYS['k'] || ACTIVE_KEYS['Delete']){
+                this.health = 0;
+            }
+            this.swing();
+            this.update();
+            this.setInversion(this.image.height / 2);
+            this.animationStatus();
+            this.animationSelection();
         }
-        if(ACTIVE_KEYS['d'] || ACTIVE_KEYS['ArrowRight']){
-            this.moveRight();
-        }
-        if(ACTIVE_KEYS['k'] || ACTIVE_KEYS['Delete']){
-            this.health = 0;
-        }
-        this.swing();
-        this.update();
-        this.setInversion(this.image.height / 2);
-        this.animationStatus();
-        this.animationSelection();
     }
 
     draw(ctx){
-        // this.swinging ? this.sword.swing(ctx, this.x, this.y) : null;
-        // ctx.fillStyle = 'red';
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
-        this.sprite.draw(
-            ctx, 
-            this.status, 
-            this.animationFrame,
-            this.inverted ? this.x -25: this.x , // this is to set the hitbox smaller only on the left side while facing left
-            this.y - 25, // this is to offset the size difference of the hitbox
-            WIDTH + 25, // this is to make the player wider but have the hitbox small
-            HEIGHT + 25, //this is to make the player taller but have the hitbox small
-            this.inverted
-        );
+        if(this.status.status === 'dead'){
+            this.dead(ctx)
+        } else {
+            this.sprite.draw(
+                ctx, 
+                this.status, 
+                this.animationFrame,
+                this.inverted ? this.getLeft() - this.characterXOffset: this.getLeft() , // this is to set the hitbox smaller only on the left side while facing left
+                this.getTop() - this.characterYOffset, // this is to offset the size difference of the hitbox
+                this.width + this.characterXOffset, // this is to make the player wider but have the hitbox small
+                this.height + this.characterYOffset, //this is to make the player taller but have the hitbox small
+                this.inverted
+            );
+            // this.sprite.draw(
+            //     ctx, 
+            //     this.status, 
+            //     this.animationFrame,
+            //     this.inverted // this is to set the hitbox smaller only on the left side while facing left
+                // ? this.getLeft() - this.characterXOffset
+                // : this.getLeft() , 
+            //     this.getTop() - this.characterYOffset, // this is to offset the size difference of the hitbox
+            //     this.getWidth() + this.characterXOffset, // this is to make the player wider but have the hitbox small
+            //     this.getHeight() + this.characterYOffset, //this is to make the player taller but have the hitbox small
+            //     this.inverted
+            // );
+        }
     };
 
     jump(){
         if(
             ACTIVE_KEYS[" "] 
             && !this.jumping 
-            && this.y_velocity === 0 
+            && this.getYVelocity() === 0 
             && this.jumpingBuffer){
                 super.jump();
                 this.jumping = true;
@@ -98,7 +139,7 @@ class Character extends MovingObject{
         if(
             ACTIVE_KEYS["ArrowUp"] 
             && !this.jumping 
-            && this.y_velocity === 0 
+            && this.getYVelocity() === 0 
             && this.jumpingBuffer){
                 super.jump();
                 this.jumping = true;
@@ -109,7 +150,7 @@ class Character extends MovingObject{
         if(
             !ACTIVE_KEYS[" "] 
             && !this.jumping 
-            && this.y_velocity === 0 
+            && this.getYVelocity() === 0 
             && !this.jumpingBuffer 
             && !ACTIVE_KEYS['ArrowUp']){
                 this.jumpingBuffer = true
@@ -117,7 +158,7 @@ class Character extends MovingObject{
         if(
             !ACTIVE_KEYS["ArrowUp"] 
             && !this.jumping 
-            && this.y_velocity === 0 
+            && this.getYVelocity() === 0 
             && !this.jumpingBuffer 
             && !ACTIVE_KEYS[" "]){
                 this.jumpingBuffer = true
@@ -127,11 +168,6 @@ class Character extends MovingObject{
     swing(){
         if(ACTIVE_KEYS["Shift"]){
             this.swinging = true;
-            // if(!ACTIVE_KEYS['ArrowLeft'] || !ACTIVE_KEYS['ArrowRight'] || !ACTIVE_KEYS['a'] || !ACTIVE_KEYS['d']){
-            //     this.setXVelocity(0);
-            // }
-        } else {
-            this.swinging = false;
         }
     }
 
@@ -142,32 +178,29 @@ class Character extends MovingObject{
             this.updateStatus(this.animation_frames['dead']);
             return;
         }
-        if(this.damage && this.damageCounter === 60){
-            this.health -= 1;
-            this.damageCounter -= 1
-            this.updateStatus(this.animation_frames['damaged']);
-            return;
-        }
-        if(this.damage && this.damageCounter < 60 && this.damage && this.damageCounter >= 40){
-            this.damageCounter -= 1
-            this.updateStatus(this.animation_frames['damaged']);
-            return;
-        }
-        if(this.damage && this.damageCounter < 40 && this.damage > 0){
-            this.damageCounter -= 1;
-        }
-        if(this.damage && this.damageCounter <= 0){
-            this.damage = false;
-            this.damageCounter = 60;
-        }
+
+        // if(this.damage && this.damageCounter === 60){
+        //     this.health -= 1;
+        //     this.damageCounter -= 1
+        //     this.updateStatus(this.animation_frames['damaged']);
+        //     return;
+        // }
+        // if(this.damage && this.damageCounter < 60 && this.damage && this.damageCounter >= 40){
+        //     this.damageCounter -= 1
+        //     this.updateStatus(this.animation_frames['damaged']);
+        //     return;
+        // }
+        // if(this.damage && this.damageCounter < 40 && this.damage > 0){
+        //     this.damageCounter -= 1;
+        // }
+        // if(this.damage && this.damageCounter <= 0){
+        //     this.damage = false;
+        //     this.damageCounter = 60;
+        // }
         if(this.swinging){
             this.updateStatus(this.animation_frames['attack']);
             return;
         }
-        // if(this.getYVelocity() > .2){
-        //     this.updateStatus(this.animation_frames['fall']);
-        //     return;
-        // }
         if(this.jumping){
             this.updateStatus(this.animation_frames['jump']);
             return;
@@ -176,25 +209,10 @@ class Character extends MovingObject{
             this.updateStatus(this.animation_frames['run']);
             return;
         }
-        // if(this.getXVelocity() < 0 || Math.floor(this.getXVelocity() * -1)){
-        //     this.updateStatus(this.animation_frames['run']);
-        //     return;
-        // }
         this.updateStatus(this.animation_frames['idle']);
     }
 
     animationSelection(){
-        // if(this.status['status'] === 'dead'){
-        //     if(this.animationBuffer > 0){
-        //         this.animationBuffer -= 1;
-        //     } else if( this.animationFrame === this.status.frames.length - 1){
-        //         this.animationFrame = this.status.frames.length
-        //     } else {
-        //         if(this.animationFrame > this.status.frames.length - 2)
-        //         this.animationFrame = ((this.animationFrame + 1));
-        //         this.animationBuffer = 7; 
-        //     }  
-        // } else 
         if(this.status === this.oldStatus){
             if(this.animationBuffer > 0){
                 this.animationBuffer -= 1;
@@ -211,88 +229,14 @@ class Character extends MovingObject{
         };
     }
 
+    // this.animationFrame = 0;
+    // this.animation_frames = animation_frames;
+    // this.animationBuffer = animation_buffer;
+    // this.delete = false;
+    // this.animationSelection = this.animationSelection.bind(this);
+    // this.animationStatus = this.animationStatus.bind(this);
 
 
-}
-
-const setKeyBinding = () => {
-    window.addEventListener('keydown', e => {
-        switch(e.key){
-            case('a'):
-                ACTIVE_KEYS[e.key] = true;
-                break;
-            case('ArrowLeft'):
-                ACTIVE_KEYS[e.key] = true;
-                break;
-            case('d'):
-                ACTIVE_KEYS[e.key] = true;
-                break;
-            case('ArrowRight'):
-                ACTIVE_KEYS[e.key] = true;
-                break;
-            case(" "):
-                ACTIVE_KEYS[e.key] = true;
-                break;
-            case('w'):
-                ACTIVE_KEYS[e.key] = true;
-                break;
-            case('ArrowUp'):
-                ACTIVE_KEYS[e.key] = true;
-                break;                
-            case('s'):
-                ACTIVE_KEYS[e.key] = true;
-                break;
-            case('ArrowDown'):
-                ACTIVE_KEYS[e.key] = true;
-                break;
-            case('Shift'):
-                ACTIVE_KEYS[e.key] = true;
-                break;
-            case('k'):
-                ACTIVE_KEYS[e.key] = true;
-                break;
-            default:
-                break;
-        }
-        e.preventDefault()
-    });
-    window.addEventListener('keyup', e => {
-        switch(e.key){
-            case('a'):
-                ACTIVE_KEYS[e.key] = false;
-                break;
-            case('ArrowLeft'):
-                ACTIVE_KEYS[e.key] = false;
-                break;
-            case('d'):
-                ACTIVE_KEYS[e.key] = false;
-                break;
-            case('ArrowRight'):
-                ACTIVE_KEYS[e.key] = false;
-                break;
-            case(" "):
-                ACTIVE_KEYS[e.key] = false;
-                break;
-            case('w'):
-                ACTIVE_KEYS[e.key] = false;
-                break;
-            case('ArrowUp'):
-                ACTIVE_KEYS[e.key] = false;
-                break;                
-            case('s'):
-                ACTIVE_KEYS[e.key] = false;
-                break;
-            case('ArrowDown'):
-                ACTIVE_KEYS[e.key] = false;
-                break;
-            case('Shift'):
-                ACTIVE_KEYS[e.key] = false;
-                break;
-            default:
-                break;
-        }
-        e.preventDefault()
-    });
 }
 
 

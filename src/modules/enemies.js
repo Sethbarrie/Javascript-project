@@ -8,14 +8,17 @@ import Tilesheet from "./tilesheet";
 class Enemy extends MovingObject{
     constructor(health){
         super()
-        this.health = health;
         this.image = SKELETON_SPRITE_SHEET();
         this.sprite = new Tilesheet(43 , 43, 0, ANIMATION_FRAMES_SKELETON, this.image);
-        this.health = 1;
+        this.health = health;
         this.height = 100;
         this.width = 80;
         this.x = 600;
         this.y = 635;
+        this.old_x = 600;
+        this.old_y = 635;
+        this.characterXOffset = 35;
+        this.characterYOffset = 25;
         this.x_velocity = 0;
         this.y_velocity = 0;
         this.swinging = false;
@@ -72,42 +75,42 @@ class Enemy extends MovingObject{
         };
     }
 
-    dead(ctx){
-        debugger
-        if(this.delete === true){return}
-        if(this.animationBuffer > 0){
-            this.animationBuffer -= 1;
-            this.sprite.draw(
-                ctx,
-                this.status,
-                this.animationFrame,
-                this.x,
-                this.y,
-                this.width,
-                this.height,
-                this.inverted
-            )        } else {
-            if(this.animationFrame === this.status.frames.length - 1){
-                this.delete = true;
-                this.x = 0;
-                this.y = 0;
-                this.width = 0;
-                this.height = 0;
-            }
-            this.animationFrame = ((this.animationFrame + 1));
-            this.animationBuffer = this.animationBufferReset;
-            this.sprite.draw(
-                ctx,
-                this.status,
-                this.animationFrame,
-                this.x,
-                this.y,
-                this.width,
-                this.height,
-                this.inverted
-            )
-        }
-    }
+    // dead(ctx){
+    //     // debugger
+    //     if(this.delete === true){return}
+    //     if(this.animationBuffer > 0){
+    //         this.animationBuffer -= 1;
+    //         this.sprite.draw(
+    //             ctx,
+    //             this.status,
+    //             this.animationFrame,
+    //             this.x,
+    //             this.y,
+    //             this.width,
+    //             this.height,
+    //             this.inverted
+    //         )        } else {
+    //         if(this.animationFrame === this.status.frames.length - 1){
+    //             this.delete = true;
+    //             this.x = 0;
+    //             this.y = 0;
+    //             this.width = 0;
+    //             this.height = 0;
+    //         }
+    //         this.animationFrame = ((this.animationFrame + 1));
+    //         this.animationBuffer = this.animationBufferReset;
+    //         this.sprite.draw(
+    //             ctx,
+    //             this.status,
+    //             this.animationFrame,
+    //             this.x,
+    //             this.y,
+    //             this.width,
+    //             this.height,
+    //             this.inverted
+    //         )
+    //     }
+    // }
 
 }
 
