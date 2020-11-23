@@ -14,7 +14,7 @@ class Positioning{
         this.characterYOffset = entity.characterYOffset;
         this.x_velocity = 0;
         this.y_velocity = 0;
-        this.inverted = 0;
+        this.inverted = false;
         this.parent = parent;
     }
 
@@ -55,9 +55,9 @@ class Positioning{
             return;
         }
         if(this.getXVelocity() < 0){
-            this.inverted = 16;
+            this.inverted = true;
         } else {
-            this.inverted = 0;
+            this.inverted = false;
         }
     }
 
@@ -76,21 +76,14 @@ class Positioning{
         this.setOldTop(this.getTop());
         this.setTop(this.getTop() + this.getYVelocity());
         this.setLeft(this.getLeft() + this.getXVelocity());
+        this.setInversion()
     }
 
-    move(
-        // keyA,keyArrowLeft,keyD,keyArrowRight
-        ){
-        this.setXVelocity(
-            this.getXVelocity() + (this.speed * this.keyPress(
-                // keyA,keyArrowLeft,keyD,keyArrowRight
-                ))
-        )
+    move(){
+        this.setXVelocity(this.getXVelocity() + (this.speed * this.keyPress()))
     }
     
-    keyPress(
-        // keyA,keyArrowLeft,keyD,keyArrowRight
-        ){
+    keyPress(){
 
         let keyA = this.parent.checkActiveKeys('a');
         let keyArrowLeft = this.parent.checkActiveKeys('ArrowLeft');

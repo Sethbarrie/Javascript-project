@@ -4,6 +4,9 @@ class Animation{
         this.animationFrames = entity.animation_frames;
         this.status = entity.animation_frames[entity.starting_status];
         this.oldStatus = entity.animation_frames[entity.starting_status];
+        // this.status = entity.animation_frames['attack'];
+        // this.oldStatus = entity.animation_frames['attack'];
+        this.animationLength = entity.animation_frames[entity.starting_status].frames.length;
         this.animationFrame = 0;
         this.animationBuffer = entity.animation_buffer;
         this.animationBufferReset = entity.animation_buffer;
@@ -12,44 +15,46 @@ class Animation{
 
     currentAnimationFrame(){return this.animationFrame;}
     currentStatus(){return this.status;}
+    endOfAnimation(){return this.animationFrame === this.animationLength - 1}
 
     setStatus(newStatus){this.status = this.animationFrames[newStatus];}
     setOldStatus(){this.oldStatus = this.status;}
+    setAnimationLength(){this.animationLength = this.status.frames.length}
 
-    animationStatus(
-        // totalHealth,
-        // damagedAnimation,
-        // swingingAnimation,
-        // jumpingAnimation,
-        // movingAnimation
-    ){
-            if(this.parent.totalHealth() <= 0){
-                this.setOldStatus(this.currentStatus());
-                this.setStatus('dead');
-                return;
-            }
-            if(this.parent.damagedAnimation()){
-                this.setOldStatus(this.currentStatus());
-                this.setStatus('damaged');
-                return;
-            }
-            if(this.parent.swingingAnimation()){
-                this.setOldStatus(this.currentStatus());
-                this.setStatus('attack');
-                return;
-            }
-            if(this.parent.jumpingAnimation()){
-                this.setOldStatus(this.currentStatus());
-                this.setStatus('jump');
-                return;
-            }
-            if(this.parent.movingAnimation()){
-                this.setOldStatus(this.currentStatus());
-                this.setStatus('run');
-                return;
-            }
+    animationStatus(){
+        if(this.parent.totalHealth() <= 0){
             this.setOldStatus(this.currentStatus());
-            this.setStatus('idle');
+            this.setStatus('dead');
+            this.setAnimationLength();
+            return;
+        }
+        if(this.parent.damagedAnimation()){
+            this.setOldStatus(this.currentStatus());
+            this.setStatus('damaged');
+            this.setAnimationLength();
+            return;
+        }
+        if(this.parent.swingingAnimation()){
+            this.setOldStatus(this.currentStatus());
+            this.setStatus('attack');
+            this.setAnimationLength();
+            return;
+        }
+        if(this.parent.jumpingAnimation()){
+            this.setOldStatus(this.currentStatus());
+            this.setStatus('jump');
+            this.setAnimationLength();
+            return;
+        }
+        if(this.parent.movingAnimation()){
+            this.setOldStatus(this.currentStatus());
+            this.setStatus('run');
+            this.setAnimationLength();
+            return;
+        }
+        this.setOldStatus(this.currentStatus());
+        this.setStatus('idle');
+        this.setAnimationLength();
     }
 
     
@@ -80,12 +85,8 @@ class Animation{
         return this.animationFrame;
     }
 
-    update(
-        // totalHealth,damagedAnimation,swingingAnimation,jumpingAnimation,movingAnimation
-        ){
-        this.animationStatus(
-            // totalHealth,damagedAnimation,swingingAnimation,jumpingAnimation,movingAnimation
-            );
+    update(){
+        this.animationStatus();
         if(this.status.status === 'dead'){
             return this.deadAnimation();
         } else {

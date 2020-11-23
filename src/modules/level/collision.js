@@ -1,12 +1,10 @@
-// import * as CollisionMap from './collision_map';
 import {
     WINDOW_HEIGHT,
     WINDOW_WIDTH,
     TILE_SIZE,
     HEIGHT,
     WIDTH
-} from './constants';
-import {TILE_SHEET_KEY} from './tile_keys';
+} from '../variables/constants';
 
 class Collision{
 
@@ -138,7 +136,8 @@ class Collision{
                 break;
             case 19:
                 break;
-            case 20:
+            case 69:
+                this.healthBarCollision(character);
                 break;       
             default:
                 break;
@@ -158,7 +157,7 @@ class Collision{
     }
 
     collideBottom(character, y){
-        debugger;
+        // debugger;
         if((character.positioning.getBottom()) >= y && character.positioning.getOldBottom() <= y){
             character.positioning.setBottom(y);
             character.jump.bonk();
@@ -188,62 +187,11 @@ class Collision{
         return false;    
     }
 
-    // enemyCollision(mainCharacter, enemy){
-    //     if(
-    //         mainCharacter.getLeft() < enemy.getRight() && enemy.getRight() < mainCharacter.getRight() ||
-    //         mainCharacter.getRight() > enemy.getLeft() && enemy.getLeft() > mainCharacter.getLeft()
-    //     ){  
-    //         if(
-    //             mainCharacter.getTop() < enemy.getBottom() && enemy.getBottom() < mainCharacter.getBottom() ||
-    //             mainCharacter.getBottom() < enemy.getTop() && enemy.getTop() > mainCharacter.getTop()
-    //         ){
-    //             return true;
-    //         } else{
-    //             return false;
-    //         }
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-    // swordCollision(attacker, opponent){
-    //     if(!attacker.swinging){
-    //         return false;
-    //     }
-    //     if(attacker.inverted){
-    //         if(
-    //             attacker.getLeft() - 16 < opponent.getRight() && opponent.getRight() < attacker.getRight() ||
-    //             attacker.getRight() > opponent.getLeft() && opponent.getLeft() > attacker.getLeft()
-    //         ){  
-    //             if(
-    //                 attacker.getTop() < opponent.getBottom() && opponent.getBottom() < attacker.getBottom() ||
-    //                 attacker.getBottom() < opponent.getTop() && opponent.getTop() > attacker.getTop()
-    //             ){
-    //                 return true;
-    //             } else{
-    //                 return false;
-    //             }
-    //         } else {
-    //             return false;
-    //         }
-    //     }else {
-    //         if(
-    //             attacker.getSwordLeft() < opponent.getRight() && opponent.getRight() < attacker.getSwordRight() ||
-    //             attacker.getRight() > opponent.getLeft() && opponent.getLeft() > attacker.getSwordLeft()
-    //         ){  
-    //             if(
-    //                 attacker.getSwordTop() < opponent.getBottom() && opponent.getBottom() < attacker.getSwordBottom() ||
-    //                 attacker.getSwordBottom() < opponent.getTop() && opponent.getTop() > attacker.getSwordTop()
-    //             ){
-    //                 return true;
-    //             } else{
-    //                 return false;
-    //             }
-    //         } else {
-    //             return false;
-    //         }
-    //     }
-    // }
+    healthBarCollision(character){
+        if(character.hitboxActive() && character.weaponCollision(10, 10, 130,130)){
+            character.damageEntity(1)
+        }
+    }
 
 }
 

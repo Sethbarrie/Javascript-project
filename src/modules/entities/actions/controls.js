@@ -1,6 +1,6 @@
 import {
     ACTIVE_KEYS
-} from './constants';
+} from '../../variables/constants';
 
 export const setKeyBinding = () => {
     window.addEventListener('keydown', e => {

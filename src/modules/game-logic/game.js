@@ -1,15 +1,11 @@
-import Castle from './castle';
-// import Character from './character';
-import Collision from './collision';
 import Viewport from './viewport';
-// import Enemy from './enemies';
-// import HealthBar from './health_bar';
+import HealthBar from '../entities/health_bar';
 import {
     WINDOW_WIDTH,
     WINDOW_HEIGHT,
     MAIN_CHARACTER
-} from './constants';
-import Character from './entities/character';
+} from '../variables/constants';
+import Character from '../entities/character';
 
 class Game {
 
@@ -50,6 +46,7 @@ class Game {
         this.viewport = new Viewport();
         this.update = this.update.bind(this);
         this.draw = this.draw.bind(this);
+        this.healthbar = new HealthBar()
     }
 
     update(timeStep){
@@ -64,8 +61,8 @@ class Game {
         //     enemy.draw(ctx);
         // });
         this.mainCharacter.draw(ctx);
-        // this.healthbar.draw(ctx);
-        // ctx.imageSmoothingEnabled = false;
+        this.healthbar.draw(ctx,this.mainCharacter.totalHealth());
+        ctx.imageSmoothingEnabled = false;
     }
     
 }

@@ -44,7 +44,7 @@ export const HEALTH_TILE_KEY = {
         offset: 0,
         width: 100,
         height: 100,
-        x: 10,
+        x: 7,
         y: 33
     },
     '6': {
@@ -52,7 +52,7 @@ export const HEALTH_TILE_KEY = {
         offset: 0,
         width: 100,
         height: 100,
-        x: 93,
+        x: 97,
         y: 33
     },
     '7': {
@@ -150,7 +150,8 @@ export const ANIMATION_FRAMES_MC = {
         frames: [0,1,2,3,4,5],
         width: 32,
         height: 32,
-        offset: 128
+        offset: 128,
+        hitboxFrames: [2,3]
     },
     'damaged': {
         status: 'damaged',

@@ -1,10 +1,10 @@
-import Tilesheet from './tilesheet';
+import Tilesheet from '../game-logic/tilesheet';
 import {
     WORLD_SPRITE_SHEET,
     COLUMNS,
     TILE_SIZE
-} from './constants';
-import {TILE_SHEET_KEY} from './tile_keys';
+} from '../variables/constants';
+import {TILE_SHEET_KEY} from '../variables/tile_keys';
 
 
 class Castle{

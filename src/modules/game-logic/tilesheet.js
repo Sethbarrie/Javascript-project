@@ -1,8 +1,8 @@
-import { 
-    TILE_SIZE,
-    WINDOW_HEIGHT,
-    WINDOW_WIDTH
-} from "./constants";
+// import { 
+//     TILE_SIZE,
+//     WINDOW_HEIGHT,
+//     WINDOW_WIDTH
+// } from "../variables/constants";
 
 
 
@@ -14,15 +14,16 @@ class Tilesheet{
         this.columns = columns;
         this.image = image;
         this.tileKey = tileKey;
+        this.invertedSize = image.height / 2
     }
 
     draw(ctx, status, frame, posX, posY, spriteWidth, spriteHeight, inverted ){
         ctx.drawImage(
             this.image,
-            frame * status['width'], //starting position of the tile sheet for the x
-            (status['offset']) + inverted, //starting position of the tile sheet for the y
-            status['width'], //how big the tilesheet image is for x
-            status['height'], //how big the tilesheet image is for y
+            frame * status.width, //starting position of the tile sheet for the x
+            inverted ? status.offset + this.invertedSize : status.offset, //starting position of the tile sheet for the y
+            status.width, //how big the tilesheet image is for x
+            status.height, //how big the tilesheet image is for y
             posX,                  //where the image goes on the canvas for x
             posY,                  //where the image goes on the canvas for y
             spriteWidth, //how big the image is on the canvas for x

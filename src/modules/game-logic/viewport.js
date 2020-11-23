@@ -1,22 +1,21 @@
-import Castle from './castle';
-import Collision from './collision';
+import Castle from '../level/castle';
+import Collision from '../level/collision';
 import { 
     MAPS_LIST
-} from './constants';
+} from '../variables/constants';
 
 class Viewport{
 
     constructor(){
         this.castle = new Castle();
         this.collision = new Collision();
-        this.scrolling = false;
         this.visibleMap = MAPS_LIST[this.castle.level].visualMap;
         this.currentCollisionMap = MAPS_LIST[this.castle.level].collisionMap;
     }
 
     scrollingScreen(ctx, character){
-        if(character.positioning.getTop() < 0){
-            character.positioning.setTop(680);
+        if(character.getTop() < 0){
+            character.setTop(680);
             this.castle.level += 1;
             this.visibleMap = MAPS_LIST[this.castle.level].visualMap;
             this.currentCollisionMap = MAPS_LIST[this.castle.level].collisionMap;

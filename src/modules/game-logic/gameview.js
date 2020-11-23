@@ -1,5 +1,5 @@
 import Game from './game';
-import {INTERVAL} from './constants';
+import {INTERVAL} from '../variables/constants';
 import Timer from './timer';
 
 class GameView{

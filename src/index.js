@@ -1,8 +1,8 @@
-import GameView from './modules/gameview';
+import GameView from './modules/game-logic/gameview';
 import { 
     WINDOW_HEIGHT, 
     WINDOW_WIDTH 
-} from './modules/constants';
+} from './modules/variables/constants';
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvasElement = document.getElementById("game-canvas")

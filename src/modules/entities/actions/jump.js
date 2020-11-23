@@ -3,30 +3,34 @@ class Jump{
     constructor(entity, parent){
         this.jumping = false;
         this.jumpingBuffer = true;
-        this.jumpHeight = entity.jumpHeight;
+        this.jumpHeight = entity.jump_height;
         this.shortHopTimer = entity.shortHopTimer;
         this.phaseThroughPlatform = false;
         this.phaseTimer = 5;
         this.parent = parent;
     }
 
+    //For use in animation module
     jumpingAnimation(){return this.jumping;}
 
+    //checks to not run through methods if unnecessary
     update(){
-        // if(this.jumping){
-        //     return;
-        // }
+        if(this.jumping){
+            return;
+        }
         this.setCharacterJump();
-        // if(this.jumping){
-        //     return;
-        // }
-        // this.fallThroughPlatform();
+        if(this.jumping){
+            return;
+        }
+        this.fallThroughPlatform();
     }
 
+    //jump logic. you can't jump when jumping, and the jump buffer makes it to where you
+    //need to let go of the button to jump again
     setCharacterJump(){
-        // if(this.jumping || this.parent.positioning.getYVelocity() !== 0){
-        //     return;
-        // }
+        if(this.jumping || this.parent.positioning.getYVelocity() !== 0){
+            return;
+        }
         if(this.jumpingBuffer){
             if(this.parent.checkActiveKeys(' ') || this.parent.checkActiveKeys('ArrowUp')){
                 this.parent.positioning.setYVelocity(this.parent.positioning.getYVelocity() - this.jumpHeight)                
@@ -43,6 +47,7 @@ class Jump{
         };
     };
 
+    //bonk
     bonk(){this.jumping = false}
 
     setEnemyJump(){
