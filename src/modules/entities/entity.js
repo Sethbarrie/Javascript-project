@@ -4,6 +4,7 @@ import Jump from './actions/jump';
 import Animation from './actions/animation';
 import Positioning from './actions/positioning';
 import Health from './actions/health';
+import EntityCollision from './actions/entity_collision';
 
 
 class Entity{
@@ -12,18 +13,35 @@ class Entity{
         this.positioning = new Positioning(entity,this);
         this.weapon = new Weapon(entity, this);
         this.animation = new Animation(entity, this);
-        this.health = new Health(entity);
+        this.health = new Health(entity, this);
         this.jump = new Jump(entity, this);
+        this.entityCollision = new EntityCollision(entity, this);
     }
 
-    update(timeStep){
+    updateCharacter(timeStep){
         if(this.totalHealth() > 0){
-            this.jump.update(timeStep);
-            this.positioning.update(timeStep);
-            this.weapon.update();
+            this.health.deathKey();
+            this.jump.updateCharacter(timeStep);
+            this.positioning.updateCharacter(timeStep);
+            this.weapon.updateCharacter(timeStep);
             this.damageEntity();
         }
         return this.animation.update(timeStep);
+    }
+
+    updateEnemy(timeStep){
+        if(this.totalHealth() > 0){
+            this.jump.updateEnemy(timeStep);
+            this.positioning.updateEnemy(timeStep);
+            this.weapon.updateEnemy(timeStep);
+            this.damageEntity();
+        }
+        return this.animation.update(timeStep);
+    }
+
+    debugMode(ctx){
+        // this.positioning.debugMode(ctx);
+        this.weapon.debugMode(ctx);
     }
 
     //Positioning

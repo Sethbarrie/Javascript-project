@@ -20,6 +20,9 @@ export const setKeyBinding = () => {
             case(" "):
                 ACTIVE_KEYS[e.key] = true;
                 break;
+            case("k"):
+                ACTIVE_KEYS[e.key] = true;
+                break;
             case('w'):
                 ACTIVE_KEYS[e.key] = true;
                 break;

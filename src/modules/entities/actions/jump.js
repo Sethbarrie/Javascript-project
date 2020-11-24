@@ -14,20 +14,32 @@ class Jump{
     jumpingAnimation(){return this.jumping;}
 
     //checks to not run through methods if unnecessary
-    update(){
+    updateCharacter(timeStep){
         if(this.jumping){
             return;
         }
-        this.setCharacterJump();
+        this.setCharacterJump(timeStep);
         if(this.jumping){
             return;
         }
-        this.fallThroughPlatform();
+        this.fallThroughPlatform(timeStep);
+    }
+
+    updateEnemy(timeStep){
+        // if(this.jumping){
+        //     return;
+        // }
+        // this.setCharacterJump(timeStep);
+        // if(this.jumping){
+        //     return;
+        // }
+        // this.fallThroughPlatform(timeStep);
+        return;
     }
 
     //jump logic. you can't jump when jumping, and the jump buffer makes it to where you
     //need to let go of the button to jump again
-    setCharacterJump(){
+    setCharacterJump(timeStep){
         if(this.jumping || this.parent.positioning.getYVelocity() !== 0){
             return;
         }
@@ -54,7 +66,7 @@ class Jump{
 
     }
 
-    fallThroughPlatform(){
+    fallThroughPlatform(timeStep){
         if(this.phaseThroughPlatform){
             this.phaseTimer --;
         }

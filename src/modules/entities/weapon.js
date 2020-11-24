@@ -10,9 +10,14 @@ class Weapon{
         this.parent = parent;
     };
 
-    update(){
+    updateCharacter(){
         this.swing();
         this.damageFrames();
+    }
+
+    
+    updateEnemy(){
+        this.swing();
     }
 
     getWeaponWidth(){return this.weaponWidth}
@@ -32,7 +37,36 @@ class Weapon{
             // This plays out the animation if shift is not pressed
             || (this.activeSwing && !this.parent.endOfAnimation())
         )
+        if(this.activeSwing){
+            this.damageFrames();
+        } else {
+            this.activeHitbox = false
+        }
     }}
+
+    debugMode(ctx){
+        if(this.hitboxActive()){
+            let topW = this.parent.getTop();
+            let leftW;
+            if(!this.parent.getInversion()){
+                let characterRight = this.parent.getRight();
+                leftW = characterRight;
+            } else {
+                let characterLeft = this.parent.getLeft();
+                leftW = characterLeft - this.getWeaponWidth();
+            }
+
+            ctx.beginPath();
+            ctx.rect(
+                leftW,
+                topW,
+                this.getWeaponWidth(),
+                this.getWeaponHeight());
+            ctx.lineWidth = '1';
+            ctx.fillStyle = 'green';
+            ctx.fill();
+        }
+    }
 
     damageFrames(){
         this.activeHitbox = (
@@ -42,7 +76,7 @@ class Weapon{
     }
    
     weaponCollision(x,y, width, height){
-        debugger
+        // debugger
         let topW = this.parent.getTop();
         let botW = topW + this.weaponHeight;
         let leftW;

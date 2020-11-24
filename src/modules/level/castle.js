@@ -1,4 +1,5 @@
 import Tilesheet from '../game-logic/tilesheet';
+import Viewport from '../game-logic/viewport';
 import {
     WORLD_SPRITE_SHEET,
     COLUMNS,
@@ -9,8 +10,9 @@ import {TILE_SHEET_KEY} from '../variables/tile_keys';
 
 class Castle{
 
-    constructor(){
+    constructor(ctx){
         this.level = 0;
+        this.viewport = new Viewport(0);
         this.image = new Tilesheet(
             TILE_SIZE,
             TILE_SIZE,
@@ -20,11 +22,22 @@ class Castle{
         );
     }
 
-    draw(ctx, testMap){
-        testMap.forEach((tile, idx) => {
-            this.image.drawCastle(ctx, idx, tile, this.level);
-        })
+    update(entities){
+        this.level = this.viewport.update(entities);
     }
+
+    draw(ctx){
+        this.viewport.visibleMap.forEach((tile, idx) => {
+            this.image.drawCastle(idx, tile);
+        });
+        this.image.draw(ctx, this.viewport.scrolled);
+    }
+    
+    debugMode(character, ctx){
+        this.viewport.debugMode(character, ctx);
+    }
+
+
 }
 
 

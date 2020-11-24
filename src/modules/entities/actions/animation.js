@@ -1,11 +1,10 @@
 class Animation{
 
     constructor(entity, parent){
+        // debugger;
         this.animationFrames = entity.animation_frames;
         this.status = entity.animation_frames[entity.starting_status];
         this.oldStatus = entity.animation_frames[entity.starting_status];
-        // this.status = entity.animation_frames['attack'];
-        // this.oldStatus = entity.animation_frames['attack'];
         this.animationLength = entity.animation_frames[entity.starting_status].frames.length;
         this.animationFrame = 0;
         this.animationBuffer = entity.animation_buffer;
@@ -22,43 +21,47 @@ class Animation{
     setAnimationLength(){this.animationLength = this.status.frames.length}
 
     animationStatus(){
-        if(this.parent.totalHealth() <= 0){
+        // debugger
+        if(this.parent.constructor.name === 'Character'){
+            if(this.parent.totalHealth() <= 0){
+                this.setOldStatus(this.currentStatus());
+                this.setStatus('dead');
+                this.setAnimationLength();
+                return;
+            }
+            if(this.parent.damagedAnimation()){
+                this.setOldStatus(this.currentStatus());
+                this.setStatus('damaged');
+                this.setAnimationLength();
+                return;
+            }
+            if(this.parent.swingingAnimation()){
+                this.setOldStatus(this.currentStatus());
+                this.setStatus('attack');
+                this.setAnimationLength();
+                return;
+            }
+            if(this.parent.jumpingAnimation()){
+                this.setOldStatus(this.currentStatus());
+                this.setStatus('jump');
+                this.setAnimationLength();
+                return;
+            }
+            if(this.parent.movingAnimation()){
+                this.setOldStatus(this.currentStatus());
+                this.setStatus('run');
+                this.setAnimationLength();
+                return;
+            }
             this.setOldStatus(this.currentStatus());
-            this.setStatus('dead');
+            this.setStatus('idle');
             this.setAnimationLength();
-            return;
         }
-        if(this.parent.damagedAnimation()){
-            this.setOldStatus(this.currentStatus());
-            this.setStatus('damaged');
-            this.setAnimationLength();
-            return;
-        }
-        if(this.parent.swingingAnimation()){
-            this.setOldStatus(this.currentStatus());
-            this.setStatus('attack');
-            this.setAnimationLength();
-            return;
-        }
-        if(this.parent.jumpingAnimation()){
-            this.setOldStatus(this.currentStatus());
-            this.setStatus('jump');
-            this.setAnimationLength();
-            return;
-        }
-        if(this.parent.movingAnimation()){
-            this.setOldStatus(this.currentStatus());
-            this.setStatus('run');
-            this.setAnimationLength();
-            return;
-        }
-        this.setOldStatus(this.currentStatus());
-        this.setStatus('idle');
-        this.setAnimationLength();
+        return
     }
 
     
-    animationSelection(){
+    animationSelection(timeStep){
         if(this.status === this.oldStatus){
             if(this.animationBuffer > 0){
                 this.animationBuffer -= 1;
@@ -73,7 +76,7 @@ class Animation{
         return this.animationFrame;
     }
 
-    deadAnimation(){
+    deadAnimation(timeStep){
         if(this.animationFrame === this.status.frames.length - 1)
             return this.animationFrame;
         if(this.animationBuffer > 0){
@@ -85,12 +88,12 @@ class Animation{
         return this.animationFrame;
     }
 
-    update(){
+    update(timeStep){
         this.animationStatus();
         if(this.status.status === 'dead'){
-            return this.deadAnimation();
+            return this.deadAnimation(timeStep);
         } else {
-            return this.animationSelection();
+            return this.animationSelection(timeStep);
         }
     }
 }

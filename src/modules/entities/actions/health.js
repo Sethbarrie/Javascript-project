@@ -1,6 +1,7 @@
 class Health{
 
-    constructor(entity){
+    constructor(entity, parent){
+        this.parent = parent;
         this.health = entity.health;
         this.damaged = false;
         this.damageCounter = entity.damageCounter;
@@ -15,7 +16,7 @@ class Health{
     //Method checks if you were hurt and makes you invulnerable
     //for 60 increments, you gain movement after roughly 20.
     //This is so you don't touch an enemy and die in 9 frames
-    damageEntity(damage){
+    damageEntity(damage, stepTimer){
         if(damage){
             if(this.damageCounter === this.damageCounterReset){
                 this.health -= damage;
@@ -24,7 +25,9 @@ class Health{
                 return;                
             }
         }
-        debugger;
+        if(!stepTimer){
+            return;
+        }
         if(this.damageCounter === this.damageCounterReset){
             return;
         }
@@ -48,7 +51,12 @@ class Health{
             this.damaged = false;
             return;
         }
-        
+    }
+
+    deathKey(){
+        if(this.parent.checkActiveKeys('k')){
+            this.health = 0;
+        }
     }
 }
 

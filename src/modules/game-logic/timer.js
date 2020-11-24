@@ -1,40 +1,55 @@
 export default class Timer {
 
-    constructor(time_step, update, render,ctx){
-        this.accumulated_time = 0;
-        this.animation_frame_request = undefined;
+    constructor(timeStep, update, render,ctx){
+        this.accumulatedTime = 0;
+        this.animationFrameRequest = undefined;
         this.time = undefined;
-        this.time_step = time_step;
+        this.timeStep = timeStep;
         this.ctx = ctx
+        this.gameOver = false;
+        this.gameOverTimer = 50;
 
         this.updated = false;
         this.update = update;
         this.render = render;
 
-        this.run = (time_stamp) => {
-            this.accumulated_time += time_stamp - this.time;
-            this.time = time_stamp;
+        this.run = (timeStamp) => {
+            this.accumulatedTime += timeStamp - this.time;
+            this.time = timeStamp;
 
-            while(this.accumulated_time >= this.time_step){
-                this.accumulated_time -= this.time_step;
-                this.update(time_stamp);
+            while(this.accumulatedTime >= this.timeStep){
+                this.accumulatedTime -= this.timeStep;
+                this.update(timeStamp);
 
                 this.updated = true;
             }
 
             if(this.updated){
                 this.updated = false;
-                this.render(ctx);
+                this.gameOver = this.render(ctx);
             }
 
-            this.animation_frame_request = window.requestAnimationFrame(this.handleRun);
+            if(this.gameOver){
+                this.gameOverTimer -= 1;
+            }
+
+            this.animationFrameRequest = window.requestAnimationFrame(this.handleRun);
         };
-        this.handleRun = (time_step) => {this.run(time_step);}
+        this.handleRun = (timeStep) => {
+            if(!this.gameOverTimer){
+                let img = document.getElementsByClassName('you-died-img')[0].id = 'you-died-img-displayed';
+                let audio = document.getElementById('you-died-audio');
+                audio.volume = 0.025;
+                audio.play();
+            }
+            this.run(timeStep);
+        }
     };
 
     start(){
-        this.accumulated_time = this.time_step;
+        this.accumulatedTime = this.timeStep;
         this.time = window.performance.now();
-        this.animation_frame_request = window.requestAnimationFrame(this.handleRun);
+        this.animationFrameRequest = window.requestAnimationFrame(this.handleRun);
     };
+
 }

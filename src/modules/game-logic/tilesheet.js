@@ -1,8 +1,8 @@
-// import { 
-//     TILE_SIZE,
-//     WINDOW_HEIGHT,
-//     WINDOW_WIDTH
-// } from "../variables/constants";
+import { 
+    TILE_SIZE,
+    WINDOW_HEIGHT,
+    WINDOW_WIDTH
+} from "../variables/constants";
 
 
 
@@ -15,9 +15,13 @@ class Tilesheet{
         this.image = image;
         this.tileKey = tileKey;
         this.invertedSize = image.height / 2
+        this.buffer = document.createElement('canvas');
+        this.buffer.height = WINDOW_HEIGHT;
+        this.buffer.width = WINDOW_WIDTH;
+        this.bufferCTX = this.buffer.getContext('2d');
     }
 
-    draw(ctx, status, frame, posX, posY, spriteWidth, spriteHeight, inverted ){
+    drawSprite(ctx, status, frame, posX, posY, spriteWidth, spriteHeight, inverted ){
         ctx.drawImage(
             this.image,
             frame * status.width, //starting position of the tile sheet for the x
@@ -31,10 +35,10 @@ class Tilesheet{
         )
     }
 
-    drawCastle(ctx, idx, tile, level){
+    drawCastle(idx, tile){
         let posX = ((idx % this.columns) * this.tilesize_w);
         let posY = (Math.floor(idx / this.columns) * this.tilesize_h);
-        ctx.drawImage(
+        this.bufferCTX.drawImage(
             this.image,
             this.tileKey[tile][0], //starting position of the tile sheet for the x
             this.tileKey[tile][1], //starting position of the tile sheet for the y
@@ -45,6 +49,29 @@ class Tilesheet{
             this.tileKey[tile][4], //how big the image is on the canvas for x
             this.tileKey[tile][5], //how big the image is on the canvas for y
         )
+        // this.debugMode(posX, posY, this.tileKey[tile][4], this.tileKey[tile][5]);
+    }
+
+    draw(ctx, scrolled){
+        if(scrolled){
+            this.bufferCTX.clearRect(0,0,WINDOW_WIDTH, WINDOW_HEIGHT);
+        }
+        ctx.drawImage(
+            this.buffer,0,0
+        )
+    }
+
+    debugMode(x, y, width, height){
+        this.bufferCTX.beginPath();
+        this.bufferCTX.rect(
+            x,
+            y,
+            width,
+            height
+        );
+        this.bufferCTX.lineWidth = '1';
+        this.bufferCTX.strokeStyle = 'pink';
+        this.bufferCTX.stroke();
     }
 }
 

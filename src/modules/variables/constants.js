@@ -93,6 +93,32 @@ export const MAIN_CHARACTER = {
     characterXOffset: 25,
     characterYOffset: 25,
     sprite_sheet: PLAYER_SPRITE_SHEET,
+    weapon_width: 20,
+    weapon_height: 50,
+    damage: 1
+}
+
+
+
+export const SKELETON = {
+    animation_frames: ANIMATION_FRAMES_SKELETON,
+    starting_status: 'attack',
+    animation_buffer: 3,
+    health: 9,
+    damageCounter: 180,
+    jump_height: 35,
+    shortHopTimer: 100,
+    phaseTimer: 5,
+    height: 50,
+    width: 30,
+    speed: .6,
+    friction: .9,
+    gravity: 1.2,
+    start_x: 448,
+    start_y: 678,
+    characterXOffset: 40,
+    characterYOffset: 70,
+    sprite_sheet: SKELETON_SPRITE_SHEET,
     weapon_width: 16,
     weapon_height: 10,
     damage: 1

@@ -20,7 +20,7 @@ class Character extends Entity{
     }
 
     update(timeStep){
-        this.frame = super.update(timeStep);
+        this.frame = super.updateCharacter(timeStep);
     }
 
     // collision(){
@@ -30,16 +30,24 @@ class Character extends Entity{
     draw(ctx){
         let xOffset = this.getXOffset();
         let yOffset = this.getYOffset();
-        this.sprite.draw(
+        let top = this.getTop();
+        let left = this.getLeft();
+        this.sprite.drawSprite(
             ctx, 
             this.animation.currentStatus(), 
             this.frame,
-            this.getInversion() ? this.getLeft() - xOffset: this.getLeft() , // this is to set the hitbox smaller only on the left side while facing left
-            this.getTop() - yOffset, // this is to offset the size difference of the hitbox
+            this.getInversion() ? left - xOffset: left , // this is to set the hitbox smaller only on the left side while facing left
+            top - yOffset, // this is to offset the size difference of the hitbox
             this.width + xOffset, // this is to make the player wider but have the hitbox small
             this.height + yOffset, //this is to make the player taller but have the hitbox small
             this.getInversion()
         );
+        super.debugMode(ctx);
+        ctx.beginPath();
+        ctx.lineWidth = "6";
+        ctx.strokeStyle = "red";
+        ctx.rect(left, top, this.width, this.height);
+        ctx.stroke();   
     }
 
 }
