@@ -78,7 +78,7 @@ class Positioning{
     updateEnemy(timeStep){
         this.moveEnemy();
         this.setYVelocity((this.getYVelocity() + this.gravity) * this.friction);
-        this.setXVelocity(this.getXVelocity() * this.friction);
+        // this.setXVelocity(this.getXVelocity() * this.friction);
         this.setOldLeft(this.getLeft());
         this.setOldTop(this.getTop());
         this.setTop(this.getTop() + this.getYVelocity());
@@ -92,7 +92,7 @@ class Positioning{
 
     moveEnemy(){
         let direction = this.inverted ? -.5 : .5;
-        this.setXVelocity(this.getXVelocity() + (this.speed * direction))
+        // this.setXVelocity(this.getXVelocity() + (this.speed * direction))
     }
     
     keyPress(){

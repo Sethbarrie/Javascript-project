@@ -50,6 +50,10 @@ class Character extends Entity{
         ctx.stroke();   
     }
 
+    debugMode(ctx){
+        
+    }
+
 }
 
 export default Character;

@@ -38,11 +38,13 @@ class Enemy extends Entity{
             this.height + yOffset, //this is to make the player taller but have the hitbox small
             this.getInversion()
         );
-        // ctx.beginPath();
-        // ctx.lineWidth = "6";
-        // ctx.strokeStyle = "red";
-        // ctx.rect(left, top - yOffset, this.width, this.height + yOffset);
-        // ctx.stroke();   
+        super.debugMode(ctx);
+
+        ctx.beginPath();
+        ctx.lineWidth = "6";
+        ctx.strokeStyle = "red";
+        ctx.rect(left, top, this.width, this.height);
+        ctx.stroke();   
     }
 
 

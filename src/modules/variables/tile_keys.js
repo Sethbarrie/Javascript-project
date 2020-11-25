@@ -87,7 +87,7 @@ export const ANIMATION_FRAMES_SKELETON = {
         status: 'run',
         row: 0, 
         frames: [0,1,2,3,4,5,6,7,8,9,10,11,12],
-        width: 22,
+        width: 43,
         height: 37,
         offset: 0
     },
@@ -97,16 +97,16 @@ export const ANIMATION_FRAMES_SKELETON = {
         frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],
         width: 43,
         height: 37,
-        offset: 33,
-        hitboxFrames: [8,9,10]
+        offset: 37,
+        hitboxFrames: [8,9]
     },
     'dead': {
         status: 'dead',
         row: 2, 
         frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],
-        width: 33,
+        width: 43,
         height: 37,
-        offset: 77
+        offset: 74
     }
 }
 

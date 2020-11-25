@@ -12,12 +12,14 @@ class Weapon{
 
     updateCharacter(){
         this.swing();
-        this.damageFrames();
+        // this.damageFrames();
     }
 
     
     updateEnemy(){
-        this.swing();
+        // this.swing();
+        this.activeSwing = true;
+        this.damageFrames();
     }
 
     getWeaponWidth(){return this.weaponWidth}

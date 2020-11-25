@@ -37,12 +37,13 @@ class Game {
         if(this.mainCharacter.totalHealth() === 0){
             return true;
         }
-        // this.debugMode(ctx);
+        this.debugMode(ctx);
     }
 
     debugMode(ctx){
         this.castle.debugMode(this.mainCharacter, ctx);
-        this.mainCharacter.debugMode(ctx)
+        this.mainCharacter.debugMode(ctx);
+        this.enemy.debugMode(ctx);
     }
     
 }
