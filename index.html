@@ -3,6 +3,7 @@
     <title>JS project</title>
     <script src="dist/main.js"></script>
     <link rel="stylesheet" href="src/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body ondragstart="return false">
     <img src="./src/images/knight.png" id="main-character-tileset" loading='eager'>
@@ -13,11 +14,27 @@
     <img src="./src/images/you_died.jpg" class='you-died-img'>
 
     <audio src='./src/mp3s/you_died.mp3' id='you-died-audio'></audio>
-    <div id='left-block'></div>
-    <canvas id="game-canvas" height="768" width="1024" background-img='./'></canvas>
-    <div id='right-block'></div>
-    <div id='left-button-container'></div>
-    <div id='instruction-block'></div>
-    <div id='right-button-container'></div>
+    <div class='top-container'>
+        <div id='left-block'>
+            <i id='volume-on' class="material-icons">volume_up</i>
+            <i id='volume-off' class="material-icons">volume_off</i>
+            <p>The Tower Climb</p>
+            <p>The goal of the tower climb game is to climb the tower.</p>
+            <p>Try not to die. . .</p>
+        </div>
+        <canvas id="game-canvas" height="768" width="1024" background-img='./'></canvas>
+        <div id='right-block'>
+            <p>Move around with WASD or the Arrow keys.</p>
+            <p>Press Space to jump.</p>
+            <p>Swing your sword with the Shift key.</p>
+        </div>
+    </div>
+    <div id='bottom-container'>
+        <div id='left-button-container'>
+
+        </div>
+        <div id='instruction-block'></div>
+        <div id='right-button-container'>ALKISHDKIUVHALSDF</div>
+    </div>
 </body>
 </html>

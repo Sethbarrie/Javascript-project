@@ -5,6 +5,7 @@ import Animation from './actions/animation';
 import Positioning from './actions/positioning';
 import Health from './actions/health';
 import EntityCollision from './actions/entity_collision';
+import Vision from './actions/vision';
 
 
 class Entity{
@@ -16,6 +17,7 @@ class Entity{
         this.health = new Health(entity, this);
         this.jump = new Jump(entity, this);
         this.entityCollision = new EntityCollision(entity, this);
+        this.vision = new Vision(entity, this);
     }
 
     updateCharacter(timeStep){
@@ -24,7 +26,7 @@ class Entity{
             this.jump.updateCharacter(timeStep);
             this.positioning.updateCharacter(timeStep);
             this.weapon.updateCharacter(timeStep);
-            this.damageEntity();
+            this.damageEntity(0, timeStep);
         }
         return this.animation.update(timeStep);
     }
@@ -39,11 +41,7 @@ class Entity{
         return this.animation.update(timeStep);
     }
 
-    debugMode(ctx){
-        // this.positioning.debugMode(ctx);
-        this.weapon.debugMode(ctx);
-    }
-
+    
     //Positioning
     getTop(){return this.positioning.getTop()};
     getBottom(){return this.positioning.getBottom()};
@@ -67,21 +65,21 @@ class Entity{
     
     getXVelocity(){return this.positioning.getXVelocity()};
     getYVelocity(){return this.positioning.getYVelocity()};
-
+    
     setXVelocity(x){this.positioning.setXVelocity(x)};
     setYVelocity(y){this.positioning.setYVelocity(y)};
-
+    
     getHeight(){return this.positioning.getHeight()}
     getWidth(){return this.positioning.getWidth()}
-
+    
     getInversion(){return this.positioning.getInversion()}
     setInversion(){this.positioning.setInversion()}
-
+    
     getXOffset(){return this.positioning.getXOffset()}
     getYOffset(){return this.positioning.getYOffset()}
-
+    
     move(){this.positioning.move()}
-
+    
     //These are checks for the animation status in order
     //The totalHealth method is at the top but used in other things
     //totalHealth()
@@ -117,11 +115,27 @@ class Entity{
     //Health
     totalHealth(){return this.health.totalHealth()}
     damageEntity(damage){this.health.damageEntity(damage)}
-
+    
     //Jump
     // setCharacterJump(){this.jump.setCharacterJump()}
     // fallThroughPlatform(){this.jump.fallThroughPlatform()}
     bonk(){this.jump.bonk()}
+    
+    //Enemy Functions
+    spottedPlayer(status){this.vision.spottedPlayer(status);}
+    spotPlayer(){return this.vision.spotPlayer();}
+    playerInSight(entity){this.vision.playerInSight(entity);}
+    turnToSwing(){return this.vision.turnToSwing();}
+    
+    
+    
+    
+    //DEBUG FUNCTIONS DO NOT TOUCH
+    
+    debugMode(ctx){
+        this.positioning.debugMode(ctx);
+        this.weapon.debugMode(ctx);
+    }
 }
 
 export default Entity;

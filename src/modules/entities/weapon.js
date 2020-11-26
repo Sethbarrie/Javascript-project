@@ -18,7 +18,7 @@ class Weapon{
     
     updateEnemy(){
         // this.swing();
-        this.activeSwing = true;
+        this.activeSwing = (this.parent.spotPlayer() || this.parent.endOfAnimation())
         this.damageFrames();
     }
 
@@ -76,47 +76,39 @@ class Weapon{
             && this.hitboxFrames.includes(this.parent.currentAnimationFrame())
         )
     }
-   
-    weaponCollision(x,y, width, height){
-        // debugger
-        let topW = this.parent.getTop();
-        let botW = topW + this.weaponHeight;
-        let leftW;
-        let rightW;
-        if(!this.parent.getInversion()){
-            let characterRight = this.parent.getRight();
-            leftW = characterRight - this.weaponWidth;
-            rightW = characterRight;
-        } else {
-            let characterLeft = this.parent.getLeft();
-            leftW = characterLeft;
-            rightW = characterLeft + this.weaponWidth;
+
+    weaponCollision(entity){
+        let inverted = this.parent.getInversion();
+        let attackerTop = this.parent.getTop();
+        let attackerLeft = this.parent.getLeft();
+        let attackerRight = this.parent.getRight();
+        let opponentTop = entity.getTop();
+        let opponentLeft = entity.getLeft();
+        let opponentRight = entity.getRight();
+        let opponentBottom = entity.getBottom();
+        if(
+            ((opponentTop > attackerTop && opponentTop < (attackerTop + this.weaponHeight))
+            ||(opponentBottom > attackerTop && opponentBottom < (attackerTop + this.weaponHeight))
+            ||(opponentTop < attackerTop && opponentBottom > attackerTop)
+            ||(opponentTop < attackerTop + this.weaponHeight && opponentBottom > attackerTop + this.weaponHeight)
+            )
+        ){
+            if(inverted){
+                attackerRight = attackerLeft;
+                attackerLeft = attackerLeft - this.weaponWidth;
+            } else {
+                attackerLeft = attackerRight;
+                attackerRight = attackerRight + this.weaponWidth;
+            }
+            if((opponentLeft > (attackerLeft)  && opponentLeft < (attackerRight))
+            || (opponentRight > (attackerLeft) && opponentRight < attackerRight)
+            ){
+                if(this.activeHitbox){
+                    entity.damageEntity(this.damage);
+                }
+            }
         }
-        let xCollision = ((leftW > x && leftW < x + width) || (rightW > x && rightW < x + width));
-        let yCollision = ((botW > y && botW < y + height) || (topW > y && topW < y + height));
-        let collision = (xCollision && yCollision);
-        this.enemyCollision = collision;
-        return collision;
     }
-
-        // enemyCollision(mainCharacter, enemy){
-    //     if(
-    //         mainCharacter.getLeft() < enemy.getRight() && enemy.getRight() < mainCharacter.getRight() ||
-    //         mainCharacter.getRight() > enemy.getLeft() && enemy.getLeft() > mainCharacter.getLeft()
-    //     ){  
-    //         if(
-    //             mainCharacter.getTop() < enemy.getBottom() && enemy.getBottom() < mainCharacter.getBottom() ||
-    //             mainCharacter.getBottom() < enemy.getTop() && enemy.getTop() > mainCharacter.getTop()
-    //         ){
-    //             return true;
-    //         } else{
-    //             return false;
-    //         }
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
 
 }
 

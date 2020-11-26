@@ -14,10 +14,10 @@ class HealthBar{
     }
 
     draw(ctx, health){
-        this.sprite.draw(ctx, HEALTH_TILE_KEY['0'], 0, 10, 10, 125,125);
+        this.sprite.drawSprite(ctx, HEALTH_TILE_KEY['0'], 0, 10, 10, 125,125);
         if(health >= 3){
             for( let i = 3; i <= health; i ++){
-                this.sprite.draw(
+                this.sprite.drawSprite(
                     ctx, 
                     HEALTH_TILE_KEY[i.toString()],
                     HEALTH_TILE_KEY[i.toString()]['frame'],
@@ -30,7 +30,7 @@ class HealthBar{
             }
         } else {
             for(let i = health; i > 0; i--){
-                this.sprite.draw(
+                this.sprite.drawSprite(
                     ctx, 
                     HEALTH_TILE_KEY[i.toString()],
                     HEALTH_TILE_KEY[i.toString()]['frame'],

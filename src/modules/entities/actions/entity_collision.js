@@ -12,7 +12,6 @@ class EntityCollision{
             && this.parent.getRight() > entity.getLeft()
             && this.parent.getTop() < entity.getBottom()
             && this.parent.getBottom() > entity.getTop()){
-                // debugger;
                 
             }
     }

@@ -41,19 +41,8 @@ class Character extends Entity{
             this.width + xOffset, // this is to make the player wider but have the hitbox small
             this.height + yOffset, //this is to make the player taller but have the hitbox small
             this.getInversion()
-        );
-        super.debugMode(ctx);
-        ctx.beginPath();
-        ctx.lineWidth = "6";
-        ctx.strokeStyle = "red";
-        ctx.rect(left, top, this.width, this.height);
-        ctx.stroke();   
+        );  
     }
-
-    debugMode(ctx){
-        
-    }
-
 }
 
 export default Character;

@@ -192,13 +192,12 @@ class Collision{
     }
 
     healthBarCollision(character){
-        if(character.hitboxActive() && character.weaponCollision(10, 10, 130,130)){
-            character.damageEntity(1)
+        if(character.hitboxActive()){
+            character.damageEntity(1);
         }
     }
 
     debugMode(entity, collisionMap, ctx){
-        debugger
         let top = Math.floor((entity.getTop() - 1) / 32);
         let left = Math.floor((entity.getLeft() - 1) / 32);
         let right = Math.floor(entity.getRight() / 32);

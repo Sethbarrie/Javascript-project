@@ -1,16 +1,29 @@
+@font-face{
+    font-family: scratch;
+    src: url('./fonts/NAILS___.TTF');
+}
+
 *{
     margin: 0px;
     padding: 0px;
+    border-width: 0px;
+    font-family: scratch;
+    font-size: 44px;
+    color: navajowhite;
 }
+
 
 body{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-image: url(./images/full-background.jpg);
+    background-size: cover;
 }
 
 #game-canvas{
-    border: 1px solid black;
+    border: 2px solid white;
     background-image: url('./images/castle_background.jpg');
 }
 
@@ -51,4 +64,56 @@ body{
 
 #you-died-audio{
     display: none;
+}
+
+/*     Do not touch above        */
+
+.top-container{
+    width:100%;
+    height: 100%;
+    display: flex;
+}
+#bottom-container{
+    width:100%;
+    height: 100%;
+    display: flex;
+}
+
+#left-block{
+    width: 100%;
+    height: 768px;
+}
+
+#right-block{
+    width: 100%;
+    height: 768px;
+}
+
+#bottom-block{
+    display: flex;
+    width: 100%;
+    height: 100%
+}
+
+#left-button-container{
+    width: 100%;
+    height: calc(100vh - 768px);
+}
+
+#right-button-container{
+    width: 100%;
+    height: calc(100vh - 768px);
+
+}
+
+#instruction-block{
+    width: 100%;
+    height: calc(100vh - 768px);
+
+}
+
+#left-button-container{
+    width: 100%;
+    height: calc(100vh - 768px);
+
 }

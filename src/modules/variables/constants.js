@@ -77,7 +77,7 @@ export let ACTIVE_KEYS = {};
 export const MAIN_CHARACTER = {
     animation_frames: ANIMATION_FRAMES_MC,
     starting_status: 'idle',
-    animation_buffer: 10,
+    animation_buffer: 7,
     health: 9,
     damageCounter: 180,
     jump_height: 35,
@@ -93,7 +93,7 @@ export const MAIN_CHARACTER = {
     characterXOffset: 25,
     characterYOffset: 25,
     sprite_sheet: PLAYER_SPRITE_SHEET,
-    weapon_width: 20,
+    weapon_width: 25,
     weapon_height: 50,
     damage: 1
 }
@@ -102,9 +102,9 @@ export const MAIN_CHARACTER = {
 
 export const SKELETON = {
     animation_frames: ANIMATION_FRAMES_SKELETON,
-    starting_status: 'attack',
+    starting_status: 'run',
     animation_buffer: 3,
-    health: 9,
+    health: 1,
     damageCounter: 40,
     jump_height: 35,
     shortHopTimer: 100,
@@ -121,7 +121,9 @@ export const SKELETON = {
     sprite_sheet: SKELETON_SPRITE_SHEET,
     weapon_width: 70,
     weapon_height: 80,
-    damage: 1
+    damage: 1,
+    visionFront: 250,
+    visionBack: 150
 }
 
 export const SPEED = .8;

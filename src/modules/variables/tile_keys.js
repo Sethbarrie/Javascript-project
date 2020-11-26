@@ -107,7 +107,8 @@ export const ANIMATION_FRAMES_SKELETON = {
         width: 43,
         height: 37,
         offset: 74
-    }
+    },
+    'inverted': 111
 }
 
 
@@ -169,7 +170,8 @@ export const ANIMATION_FRAMES_MC = {
         width: 32,
         height: 32,
         offset: 192
-    }
+    },
+    'inverted': 224
 }
 
 

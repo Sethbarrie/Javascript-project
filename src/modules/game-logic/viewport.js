@@ -10,7 +10,7 @@ class Viewport{
         this.currentCollisionMap = MAPS_LIST[startLevel].collisionMap;
         this.collision = new Collision();
         this.currentLevel = startLevel;
-        this.scrolled = false;
+        this.scrolled = true;
     }
 
     update(entities){
@@ -18,9 +18,12 @@ class Viewport{
             if(idx === 0){
                 this.characterScrollingScreen(entity);
                 this.characterCollision(entity);
+                for(let i = 1; i < entities.length; i ++){
+                    this.entityCollision(entity, entities[i]);
+                }
             } else {
                 this.enemyCollision(entity);
-                this.enemyScrollingScreen(entity);
+                this.entityCollision(entity, entities[0])
             }
         })
         return this.currentLevel;
@@ -42,17 +45,16 @@ class Viewport{
         }
     }
     
-    enemyScrollingScreen(enemy){
-        if(this.scrolled){
-        }
-    }
-    
     characterCollision(character){        
         this.collision.collisionDetection(character, this.currentCollisionMap);
     }
 
     enemyCollision(enemy){
         this.collision.collisionDetection(enemy, this.currentCollisionMap);
+    }
+
+    entityCollision(character, enemy){
+        character.weaponCollision(enemy);
     }
 }
 

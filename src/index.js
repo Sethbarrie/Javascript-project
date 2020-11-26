@@ -5,12 +5,15 @@ import {
 } from './modules/variables/constants';
 
 document.addEventListener("DOMContentLoaded", () => {
-    const canvasElement = document.getElementById("game-canvas")
-    const ctx = canvasElement.getContext("2d")
+    const canvasElement = document.getElementById("game-canvas");
+    const ctx = canvasElement.getContext("2d");
     canvasElement.height = WINDOW_HEIGHT;
     canvasElement.width = WINDOW_WIDTH;
     
     const gameView = new GameView(canvasElement, ctx);
-    
-    gameView.play();
+    document.addEventListener('click', () => {
+        gameView.play();
+        document.removeEventListener('click');
+    }, false
+    )
 });

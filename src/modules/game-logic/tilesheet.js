@@ -14,7 +14,7 @@ class Tilesheet{
         this.columns = columns;
         this.image = image;
         this.tileKey = tileKey;
-        this.invertedSize = image.height / 2
+        this.invertedSize = tileKey.inverted;
         this.buffer = document.createElement('canvas');
         this.buffer.height = WINDOW_HEIGHT;
         this.buffer.width = WINDOW_WIDTH;
@@ -49,7 +49,6 @@ class Tilesheet{
             this.tileKey[tile][4], //how big the image is on the canvas for x
             this.tileKey[tile][5], //how big the image is on the canvas for y
         )
-        // this.debugMode(posX, posY, this.tileKey[tile][4], this.tileKey[tile][5]);
     }
 
     draw(ctx, scrolled){
@@ -59,19 +58,6 @@ class Tilesheet{
         ctx.drawImage(
             this.buffer,0,0
         )
-    }
-
-    debugMode(x, y, width, height){
-        this.bufferCTX.beginPath();
-        this.bufferCTX.rect(
-            x,
-            y,
-            width,
-            height
-        );
-        this.bufferCTX.lineWidth = '1';
-        this.bufferCTX.strokeStyle = 'pink';
-        this.bufferCTX.stroke();
     }
 }
 

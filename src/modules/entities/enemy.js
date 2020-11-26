@@ -5,7 +5,9 @@ import Tilesheet from '../game-logic/tilesheet';
 
 class Enemy extends Entity{
 
-    constructor(entity){
+    constructor(entity, startX, startY){
+        entity.start_x = startX;
+        entity.start_y = startY;
         super(entity);
         this.sprite = new Tilesheet(32, 32, 32, entity.animation_frames, entity.sprite_sheet());
         this.width = entity.width;
@@ -38,16 +40,7 @@ class Enemy extends Entity{
             this.height + yOffset, //this is to make the player taller but have the hitbox small
             this.getInversion()
         );
-        super.debugMode(ctx);
-
-        ctx.beginPath();
-        ctx.lineWidth = "6";
-        ctx.strokeStyle = "red";
-        ctx.rect(left, top, this.width, this.height);
-        ctx.stroke();   
     }
-
-
 }
 
 export default Enemy;

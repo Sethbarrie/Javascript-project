@@ -25,9 +25,9 @@ class Health{
                 return;                
             }
         }
-        if(!stepTimer){
-            return;
-        }
+        // if(!stepTimer){
+        //     return;
+        // }
         if(this.damageCounter === this.damageCounterReset){
             return;
         }
@@ -43,7 +43,7 @@ class Health{
             && this.damageCounter < Math.ceil(this.damageCounterReset * .66)
         ){
             this.damageCounter --;
-            this.damaged === false;
+            this.damaged = false;
             return;
         }
         if(this.damageCounter <= 0){

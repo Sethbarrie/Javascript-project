@@ -16,6 +16,7 @@ class Positioning{
         this.y_velocity = 0;
         this.inverted = false;
         this.parent = parent;
+        this.enemyPivot = this.enemyPivot.bind(this);
     }
 
     
@@ -78,12 +79,15 @@ class Positioning{
     updateEnemy(timeStep){
         this.moveEnemy();
         this.setYVelocity((this.getYVelocity() + this.gravity) * this.friction);
-        // this.setXVelocity(this.getXVelocity() * this.friction);
+        this.setXVelocity( 
+            this.parent.currentStatus().status === 'run' 
+            ?(this.getXVelocity() * this.friction)
+            : 0.01
+        );
         this.setOldLeft(this.getLeft());
         this.setOldTop(this.getTop());
         this.setTop(this.getTop() + this.getYVelocity());
         this.setLeft(this.getLeft() + this.getXVelocity());
-        this.setInversion()
     }
 
     moveCharacter(){
@@ -91,8 +95,20 @@ class Positioning{
     }
 
     moveEnemy(){
+        this.inverted = this.enemyPivot() ? !this.inverted : this.inverted;
         let direction = this.inverted ? -.5 : .5;
-        // this.setXVelocity(this.getXVelocity() + (this.speed * direction))
+        this.setXVelocity(this.getXVelocity() + (this.speed * direction))
+    }
+
+    enemyPivot(){
+        let pivot = 0;
+        if(this.parent.turnToSwing()){
+            pivot += 1;
+        }
+        if(!this.getXVelocity()){
+            pivot += 1;
+        }
+        return !!(pivot % 2);
     }
     
     keyPress(){
@@ -102,9 +118,6 @@ class Positioning{
         
         let keyD = this.parent.checkActiveKeys('d');
         let keyArrowRight = this.parent.checkActiveKeys('ArrowRight');
-
-        
-
 
         let returnValue = 0;
         if(keyD || keyArrowRight){
@@ -119,74 +132,79 @@ class Positioning{
     movingAnimation(){return !!this.getXVelocity();}
 
     debugMode(ctx){
-        let Top = Math.floor(this.getTop() / 32);
-        let Left = Math.floor(this.getLeft() / 32);
-        let Middle = Math.floor((this.getTop() + 32) / 32);
-        let Right = Math.floor((this.getRight()) / 32);
-        let Bottom = Math.floor((this.getBottom()) / 32);
-
-        let characterTop = Top * 32;
-        let characterLeft = Left * 32;
-        let characterMiddle = Middle * 32;
-        let characterRight = Right * 32;
-        let characterBottom = Bottom * 32;
-          
-        //Top
         ctx.beginPath();
-        ctx.rect(
-            characterRight,
-            characterTop,
-             32,32);
-        ctx.lineWidth = '3';
-        ctx.strokeStyle = 'blue';
-        ctx.stroke();
+        ctx.lineWidth = "6";
+        ctx.strokeStyle = "red";
+        ctx.rect(this.getLeft(), this.getTop(), this.width, this.height);
+        ctx.stroke(); 
+        // let Top = Math.floor(this.getTop() / 32);
+        // let Left = Math.floor(this.getLeft() / 32);
+        // let Middle = Math.floor((this.getTop() + 32) / 32);
+        // let Right = Math.floor((this.getRight()) / 32);
+        // let Bottom = Math.floor((this.getBottom()) / 32);
 
-        ctx.beginPath();
-        ctx.rect(
-            characterLeft,
-            characterTop,
-             32,32);
-        ctx.lineWidth = '3';
-        ctx.strokeStyle = 'blue';
-        ctx.stroke();
-
-        //Middle
-        ctx.beginPath();
-        ctx.rect(
-            characterLeft, 
-            characterMiddle, 
-            32,32);
-            ctx.lineWidth = '3';
-            ctx.strokeStyle = 'blue';
-            ctx.stroke();
+        // let characterTop = Top * 32;
+        // let characterLeft = Left * 32;
+        // let characterMiddle = Middle * 32;
+        // let characterRight = Right * 32;
+        // let characterBottom = Bottom * 32;
             
-        ctx.beginPath();
-        ctx.rect(
-            characterRight, 
-            characterMiddle, 
-            32,32);
-        ctx.lineWidth = '3';
-        ctx.strokeStyle = 'blue';
-        ctx.stroke();
-                
-        //Bottom
-        ctx.beginPath();
-        ctx.rect(
-            characterRight, 
-            characterBottom, 
-            32,32);
-        ctx.lineWidth = '3';
-        ctx.strokeStyle = 'blue';
-        ctx.stroke();
+        // //Top
+        // ctx.beginPath();
+        // ctx.rect(
+        //     characterRight,
+        //     characterTop,
+        //      32,32);
+        // ctx.lineWidth = '3';
+        // ctx.strokeStyle = 'blue';
+        // ctx.stroke();
 
-        ctx.beginPath();
-        ctx.rect(
-            characterLeft, 
-            characterBottom, 
-            32,32);
-        ctx.lineWidth = '3';
-        ctx.strokeStyle = 'blue';
-        ctx.stroke();
+        // ctx.beginPath();
+        // ctx.rect(
+        //     characterLeft,
+        //     characterTop,
+        //      32,32);
+        // ctx.lineWidth = '3';
+        // ctx.strokeStyle = 'blue';
+        // ctx.stroke();
+
+        // //Middle
+        // ctx.beginPath();
+        // ctx.rect(
+        //     characterLeft, 
+        //     characterMiddle, 
+        //     32,32);
+        //     ctx.lineWidth = '3';
+        //     ctx.strokeStyle = 'blue';
+        //     ctx.stroke();
+            
+        // ctx.beginPath();
+        // ctx.rect(
+        //     characterRight, 
+        //     characterMiddle, 
+        //     32,32);
+        // ctx.lineWidth = '3';
+        // ctx.strokeStyle = 'blue';
+        // ctx.stroke();
+                
+        // //Bottom
+        // ctx.beginPath();
+        // ctx.rect(
+        //     characterRight, 
+        //     characterBottom, 
+        //     32,32);
+        // ctx.lineWidth = '3';
+        // ctx.strokeStyle = 'blue';
+        // ctx.stroke();
+
+        // ctx.beginPath();
+        // ctx.rect(
+        //     characterLeft, 
+        //     characterBottom, 
+        //     32,32);
+        // ctx.lineWidth = '3';
+        // ctx.strokeStyle = 'blue';
+        // ctx.stroke();
     }
 
 }

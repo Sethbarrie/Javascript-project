@@ -1,7 +1,6 @@
 class Animation{
 
     constructor(entity, parent){
-        // debugger;
         this.animationFrames = entity.animation_frames;
         this.status = entity.animation_frames[entity.starting_status];
         this.oldStatus = entity.animation_frames[entity.starting_status];
@@ -19,45 +18,49 @@ class Animation{
     setStatus(newStatus){this.status = this.animationFrames[newStatus];}
     setOldStatus(){this.oldStatus = this.status;}
     setAnimationLength(){this.animationLength = this.status.frames.length}
+    updateStatus(status){
+        this.setOldStatus(this.currentStatus());
+        this.setStatus(status);
+        this.setAnimationLength();       
+    }
 
     animationStatus(){
-        // debugger
         if(this.parent.constructor.name === 'Character'){
             if(this.parent.totalHealth() <= 0){
-                this.setOldStatus(this.currentStatus());
-                this.setStatus('dead');
-                this.setAnimationLength();
+                this.updateStatus('dead');
                 return;
             }
             if(this.parent.damagedAnimation()){
-                this.setOldStatus(this.currentStatus());
-                this.setStatus('damaged');
-                this.setAnimationLength();
+                this.updateStatus('damaged');
                 return;
             }
             if(this.parent.swingingAnimation()){
-                this.setOldStatus(this.currentStatus());
-                this.setStatus('attack');
-                this.setAnimationLength();
+                this.updateStatus('attack');
                 return;
             }
             if(this.parent.jumpingAnimation()){
-                this.setOldStatus(this.currentStatus());
-                this.setStatus('jump');
-                this.setAnimationLength();
+                this.updateStatus('jump');
                 return;
             }
             if(this.parent.movingAnimation()){
-                this.setOldStatus(this.currentStatus());
-                this.setStatus('run');
-                this.setAnimationLength();
+                this.updateStatus('run');
                 return;
             }
-            this.setOldStatus(this.currentStatus());
-            this.setStatus('idle');
-            this.setAnimationLength();
+            this.updateStatus('idle');
+            return;
         }
-        return
+        if(this.parent.constructor.name === 'Enemy'){
+            if(this.parent.totalHealth() <= 0){
+                this.updateStatus('dead');
+                return;
+            }
+            if(this.parent.spotPlayer()){
+                this.updateStatus('attack');
+                return;
+            }
+            this.updateStatus('run');
+            return;
+        }
     }
 
     
