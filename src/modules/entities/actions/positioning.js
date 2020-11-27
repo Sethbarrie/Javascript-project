@@ -20,34 +20,34 @@ class Positioning{
     }
 
     
-    getTop(){return this.y};
-    getBottom(){return this.y + this.height};
-    getLeft(){return this.x};
-    getRight(){return this.x + this.width};
+    getTop(){return this.y;}
+    getBottom(){return this.y + this.height;}
+    getLeft(){return this.x;}
+    getRight(){return this.x + this.width;}
     
-    getOldTop(){return this.old_y};
-    getOldBottom(){return this.old_y + this.height};
-    getOldLeft(){return this.old_x};
-    getOldRight(){return this.old_x + this.width};
+    getOldTop(){return this.old_y;}
+    getOldBottom(){return this.old_y + this.height;}
+    getOldLeft(){return this.old_x;}
+    getOldRight(){return this.old_x + this.width;}
     
-    setTop(y){this.y = y};
-    setBottom(y){this.y = y - this.height};
-    setLeft(x){this.x = x};
-    setRight(x){this.x = x - this.width};
+    setTop(y){this.y = y;}
+    setBottom(y){this.y = y - this.height;}
+    setLeft(x){this.x = x;}
+    setRight(x){this.x = x - this.width;}
     
-    setOldTop(y){this.old_y = y};
-    setOldBottom(y){this.old_y = y - this.height};
-    setOldLeft(x){this.old_x = x};
-    setOldRight(x){this.old_x = x - this.width};
+    setOldTop(y){this.old_y = y;}
+    setOldBottom(y){this.old_y = y - this.height;}
+    setOldLeft(x){this.old_x = x;}
+    setOldRight(x){this.old_x = x - this.width;}
     
-    getXVelocity(){return this.x_velocity};
-    getYVelocity(){return this.y_velocity};
+    getXVelocity(){return this.x_velocity;}
+    getYVelocity(){return this.y_velocity;}
 
-    setXVelocity(x){this.x_velocity = x};
-    setYVelocity(y){this.y_velocity = y};
+    setXVelocity(x){this.x_velocity = x;}
+    setYVelocity(y){this.y_velocity = y;}
 
-    getHeight(){return this.height}
-    getWidth(){return this.width}
+    getHeight(){return this.height;}
+    getWidth(){return this.width;}
 
     getInversion(){return !!this.inverted;}
     
@@ -62,8 +62,8 @@ class Positioning{
         }
     }
 
-    getXOffset(){return this.characterXOffset}
-    getYOffset(){return this.characterYOffset}
+    getXOffset(){return this.characterXOffset;}
+    getYOffset(){return this.characterYOffset;}
 
     updateCharacter(timeStep){
         this.moveCharacter();
@@ -91,13 +91,13 @@ class Positioning{
     }
 
     moveCharacter(){
-        this.setXVelocity(this.getXVelocity() + (this.speed * this.keyPress()))
+        this.setXVelocity(this.getXVelocity() + (this.speed * this.keyPress()));
     }
 
     moveEnemy(){
         this.inverted = this.enemyPivot() ? !this.inverted : this.inverted;
         let direction = this.inverted ? -.5 : .5;
-        this.setXVelocity(this.getXVelocity() + (this.speed * direction))
+        this.setXVelocity(this.getXVelocity() + (this.speed * direction));
     }
 
     enemyPivot(){

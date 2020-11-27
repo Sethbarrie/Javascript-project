@@ -32,10 +32,23 @@ class Vision{
         ){
             this.spotted = true;
             let left = entityLeft > visibleCharacterLeft;
-            if(inverted && !left && !this.pivotToSwing){
-                this.pivotToSwing = true;
+            if(
+                inverted 
+                && !left 
+                && !this.pivotToSwing 
+                && (!this.parent.swingingAnimation() || 
+                (this.parent.endOfAnimation() &&this.parent.currentAnimationBuffer() <= 1))){
+                    this.pivotToSwing = true;
             }
-            else if(!inverted && left && !this.pivotToSwing){
+            else if(
+                !inverted 
+                && left 
+                && !this.pivotToSwing 
+                && (!this.parent.swingingAnimation() 
+                || (this.parent.endOfAnimation()
+                && this.parent.currentAnimationBuffer() <= 1)
+                )
+            ){
                 this.pivotToSwing = true;
             } else {
                 this.pivotToSwing = false;

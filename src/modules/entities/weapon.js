@@ -48,8 +48,12 @@ class Weapon{
         )
         if(this.activeSwing){
             this.damageFrames();
+            if(this.parent.endOfAnimation()){
+                //This ends the swing if the end of the animation hits
+                this.activeSwing = false;
+            }
         } else {
-            this.activeHitbox = false
+            this.activeHitbox = false;
         }
     }}
 

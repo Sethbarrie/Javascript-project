@@ -12,8 +12,12 @@ class Animation{
     }
 
     currentAnimationFrame(){return this.animationFrame;}
+    currentAnimationBuffer(){return this.animationBuffer;}
     currentStatus(){return this.status;}
-    endOfAnimation(){return this.animationFrame === this.animationLength - 1}
+    endOfAnimation(){return (
+        (this.animationFrame === this.animationLength - 1) 
+        && (this.animationBuffer <= 1)
+    )}
 
     setStatus(newStatus){this.status = this.animationFrames[newStatus];}
     setOldStatus(){this.oldStatus = this.status;}
