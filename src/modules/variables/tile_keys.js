@@ -175,6 +175,8 @@ export const ANIMATION_FRAMES_MC = {
 }
 
 
+//mr frosty dimentions for later 44px high x 44 (wide?) ice block 20x20
+
 
 
 // Key/Value pairs for tiles on the tile_castle_grey.png
