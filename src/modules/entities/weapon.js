@@ -83,7 +83,8 @@ class Weapon{
 
     damageFrames(){
         this.activeHitbox = (
-            this.activeSwing 
+            this.parent.totalHealth() > 0
+            && this.activeSwing 
             && this.hitboxFrames.includes(this.parent.currentAnimationFrame())
         )
     }

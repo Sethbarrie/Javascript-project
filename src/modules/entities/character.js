@@ -8,6 +8,7 @@ class Character extends Entity{
     constructor(entity){
         super(entity);
         this.sprite = new Tilesheet(32, 32, 32, entity.animation_frames, entity.sprite_sheet());
+        this.opaqueSprite = new Tilesheet(32, 32, 32, entity.animation_frames, entity.opaque_sprite_sheet());
         setKeyBinding();
         this.width = entity.width;
         this.height = entity.height;
@@ -32,16 +33,29 @@ class Character extends Entity{
         let yOffset = this.getYOffset();
         let top = this.getTop();
         let left = this.getLeft();
-        this.sprite.drawSprite(
-            ctx, 
-            this.animation.currentStatus(), 
-            this.frame,
-            this.getInversion() ? left - xOffset: left , // this is to set the hitbox smaller only on the left side while facing left
-            top - yOffset, // this is to offset the size difference of the hitbox
-            this.width + xOffset, // this is to make the player wider but have the hitbox small
-            this.height + yOffset, //this is to make the player taller but have the hitbox small
-            this.getInversion()
-        );  
+        if(this.opacity()){
+            this.opaqueSprite.drawSprite(
+                ctx, 
+                this.animation.currentStatus(), 
+                this.frame,
+                this.getInversion() ? left - xOffset: left , // this is to set the hitbox smaller only on the left side while facing left
+                top - yOffset, // this is to offset the size difference of the hitbox
+                this.width + xOffset, // this is to make the player wider but have the hitbox small
+                this.height + yOffset, //this is to make the player taller but have the hitbox small
+                this.getInversion()
+            );
+        } else {
+            this.sprite.drawSprite(
+                ctx, 
+                this.animation.currentStatus(), 
+                this.frame,
+                this.getInversion() ? left - xOffset: left , // this is to set the hitbox smaller only on the left side while facing left
+                top - yOffset, // this is to offset the size difference of the hitbox
+                this.width + xOffset, // this is to make the player wider but have the hitbox small
+                this.height + yOffset, //this is to make the player taller but have the hitbox small
+                this.getInversion()
+            );  
+        }
     }
 }
 

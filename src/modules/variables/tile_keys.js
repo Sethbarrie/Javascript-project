@@ -158,7 +158,7 @@ export const ANIMATION_FRAMES_MC = {
     'damaged': {
         status: 'damaged',
         row: 5, 
-        frames: [0],
+        frames: [0,1],
         width: 32,
         height: 32,
         offset: 160

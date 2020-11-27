@@ -28,8 +28,8 @@ class Tilesheet{
             inverted ? status.offset + this.invertedSize : status.offset, //starting position of the tile sheet for the y
             status.width, //how big the tilesheet image is for x
             status.height, //how big the tilesheet image is for y
-            posX,                  //where the image goes on the canvas for x
-            posY,                  //where the image goes on the canvas for y
+            Math.floor(posX),                  //where the image goes on the canvas for x
+            Math.floor(posY),                  //where the image goes on the canvas for y
             spriteWidth, //how big the image is on the canvas for x
             spriteHeight, //how big the image is on the canvas for y
         )

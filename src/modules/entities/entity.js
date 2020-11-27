@@ -110,12 +110,14 @@ class Entity{
     //Animation
     currentAnimationFrame(){return this.animation.currentAnimationFrame();}
     currentAnimationBuffer(){return this.animation.currentAnimationBuffer();}
+    setAnimationFrame(frame){this.animation.setAnimationFrame(frame);}
     currentStatus(){return this.animation.currentStatus();}
     endOfAnimation(){return this.animation.endOfAnimation();}
     
     //Health
     totalHealth(){return this.health.totalHealth();}
     damageEntity(damage){this.health.damageEntity(damage);}
+    opacity(){return this.health.opacity();}
     
     //Jump
     // setCharacterJump(){this.jump.setCharacterJump()}

@@ -22,6 +22,9 @@ import {
 export const PLAYER_SPRITE_SHEET = () => {
     return document.getElementById('main-character-tileset');
 };
+export const OPAQUE_PLAYER_SPRITE_SHEET = () => {
+    return document.getElementById('main-character-tileset-opaque');
+};
 export const SKELETON_SPRITE_SHEET = () => {
     return document.getElementById('skeleton-tileset');
 };
@@ -93,6 +96,7 @@ export const MAIN_CHARACTER = {
     characterXOffset: 25,
     characterYOffset: 25,
     sprite_sheet: PLAYER_SPRITE_SHEET,
+    opaque_sprite_sheet: OPAQUE_PLAYER_SPRITE_SHEET,
     weapon_width: 25,
     weapon_height: 50,
     damage: 1

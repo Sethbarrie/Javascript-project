@@ -6,12 +6,14 @@ class Health{
         this.damaged = false;
         this.damageCounter = entity.damageCounter;
         this.damageCounterReset = entity.damageCounter;
+        this.opaque = false;
     }
 
     totalHealth(){return this.health;}
     
     //For use in animation module
     damagedAnimation(){return this.damaged;}
+    opacity(){return this.opaque;}
 
     //Method checks if you were hurt and makes you invulnerable
     //for 60 increments, you gain movement after roughly 20.
@@ -22,6 +24,9 @@ class Health{
                 this.health -= damage;
                 this.damaged = true;
                 this.damageCounter --;
+                if(this.health <= 0){
+                    this.parent.setAnimationFrame(0);
+                }
                 return;                
             }
         }
@@ -44,11 +49,13 @@ class Health{
         ){
             this.damageCounter --;
             this.damaged = false;
+            this.opaque = true;
             return;
         }
         if(this.damageCounter <= 0){
             this.damageCounter = this.damageCounterReset;
             this.damaged = false;
+            this.opaque = false;
             return;
         }
     }

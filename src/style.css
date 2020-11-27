@@ -46,22 +46,11 @@ body{
     background-image: url('./images/castle_background.jpg');
 }
 
-#hidden_character-tileset{
-    display: none;
-}
-
-#castle-tileset{
-    display: none;
-}
-
-#main-character-tileset{
-    display: none;
-}
-
-#skeleton-tileset{
-    display: none;
-}
-
+#main-character-tileset,
+#main-character-tileset-opaque,
+#hidden_character-tileset,
+#skeleton-tileset,
+#castle-tileset,
 #health-tileset{
     display: none;
 }

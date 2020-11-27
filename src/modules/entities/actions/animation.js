@@ -13,6 +13,7 @@ class Animation{
 
     currentAnimationFrame(){return this.animationFrame;}
     currentAnimationBuffer(){return this.animationBuffer;}
+    setAnimationFrame(frame){this.animationFrame = frame;}
     currentStatus(){return this.status;}
     endOfAnimation(){return (
         (this.animationFrame === this.animationLength - 1) 
@@ -73,23 +74,23 @@ class Animation{
             if(this.animationBuffer > 0){
                 this.animationBuffer -= 1;
             } else {
-                this.animationFrame = ((this.animationFrame + 1) % (this.status.frames.length));
+                this.setAnimationFrame((this.animationFrame + 1) % (this.status.frames.length));
                 this.animationBuffer = this.animationBufferReset; 
             }
         } else {
-            this.animationFrame = 0;
+            this.setAnimationFrame(0);
             this.animationBuffer = this.animationBufferReset;
         }
         return this.animationFrame;
     }
 
     deadAnimation(timeStep){
-        if(this.animationFrame === this.status.frames.length - 1)
+        if(this.animationFrame >= this.status.frames.length - 1)
             return this.animationFrame;
         if(this.animationBuffer > 0){
             this.animationBuffer -= 1;
         } else {
-            this.animationFrame = ((this.animationFrame + 1));
+            this.setAnimationFrame((this.animationFrame + 1));
             this.animationBuffer = this.animationBufferReset; 
         }
         return this.animationFrame;
