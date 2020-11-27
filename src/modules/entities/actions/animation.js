@@ -54,7 +54,7 @@ class Animation{
                 this.updateStatus('dead');
                 return;
             }
-            if(this.parent.spotPlayer()){
+            if(this.parent.swingingAnimation()){
                 this.updateStatus('attack');
                 return;
             }

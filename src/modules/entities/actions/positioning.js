@@ -73,7 +73,7 @@ class Positioning{
         this.setOldTop(this.getTop());
         this.setTop(this.getTop() + this.getYVelocity());
         this.setLeft(this.getLeft() + this.getXVelocity());
-        this.setInversion()
+        this.setInversion();
     }
 
     updateEnemy(timeStep){
@@ -129,7 +129,19 @@ class Positioning{
         return returnValue;
     }
     
-    movingAnimation(){return !!this.getXVelocity();}
+    movingAnimation(){
+        debugger;
+        if(this.x_velocity === 0){
+            return false;
+        }
+        if(this.x_velocity > 0){
+            return this.x_velocity > 0.05;
+        }
+        if(this.x_velocity < 0){
+            return this.x_velocity < -0.05;
+        }
+        return !!this.getXVelocity();
+    }
 
     debugMode(ctx){
         ctx.beginPath();

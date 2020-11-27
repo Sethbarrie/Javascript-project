@@ -17,9 +17,16 @@ class Weapon{
 
     
     updateEnemy(){
-        // this.swing();
-        this.activeSwing = (this.parent.spotPlayer() || this.parent.endOfAnimation())
-        this.damageFrames();
+        this.activeSwing = (
+            this.parent.spotPlayer() 
+            || (this.activeSwing && !this.parent.endOfAnimation()
+            )
+        ) 
+        if(this.activeSwing){
+            this.damageFrames();
+        } else {
+            this.activeHitbox = false;
+        }
     }
 
     getWeaponWidth(){return this.weaponWidth}

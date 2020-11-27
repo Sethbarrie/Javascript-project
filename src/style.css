@@ -12,8 +12,11 @@
     color: navajowhite;
 }
 
-
 body{
+    min-width: 1850px;
+    max-width: 100vw;
+    min-height: 850px;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,6 +24,22 @@ body{
     background-image: url(./images/full-background.jpg);
     background-size: cover;
 }
+
+#hidden-game-canvas-hidden{
+    position: absolute;
+    display: none;
+    opacity: 0;
+}
+
+.hidden-game-canvas-displayed{
+    position: absolute;
+    height: 769px;
+    width: 1024px;
+    top: 0;
+    left: auto;
+    right: auto;
+}
+
 
 #game-canvas{
     border: 2px solid white;
@@ -80,11 +99,17 @@ body{
 }
 
 #left-block{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     width: 100%;
     height: 768px;
 }
 
 #right-block{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     width: 100%;
     height: 768px;
 }
@@ -107,13 +132,32 @@ body{
 }
 
 #instruction-block{
-    width: 100%;
+    min-width: 1024px;
     height: calc(100vh - 768px);
-
 }
 
 #left-button-container{
     width: 100%;
     height: calc(100vh - 768px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 
+.github .filled,
+.linkedin .filled{
+    z-index: 3;
+}
+
+.github .unfilled,
+.linkedin .unfilled{
+    z-index: 5;
+    position: absolute;
+}
+
+
+.github .unfilled:hover,
+.linkedin .unfilled:hover{
+    opacity: 0;
+    transition: 0.1s;
 }
