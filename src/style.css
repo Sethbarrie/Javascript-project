@@ -25,6 +25,14 @@ body{
     background-size: cover;
 }
 
+#hidden-volume{
+    display: none;
+}
+
+#visible-volume{
+    font-size: 120px;
+}
+
 #hidden-game-canvas-hidden{
     position: absolute;
     display: none;
@@ -91,6 +99,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    text-align: center;
     width: 100%;
     height: 768px;
 }
@@ -99,6 +108,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    text-align: center;
     width: 100%;
     height: 768px;
 }

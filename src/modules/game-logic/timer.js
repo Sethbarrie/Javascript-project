@@ -1,6 +1,6 @@
 export default class Timer {
 
-    constructor(timeStep, update, render,ctx){
+    constructor(timeStep, update, render,ctx, parent){
         this.accumulatedTime = 0;
         this.animationFrameRequest = undefined;
         this.time = undefined;
@@ -12,6 +12,7 @@ export default class Timer {
         this.updated = false;
         this.update = update;
         this.render = render;
+        this.parent = parent;
 
         this.run = (timeStamp) => {
             this.accumulatedTime += timeStamp - this.time;
@@ -38,9 +39,11 @@ export default class Timer {
         this.handleRun = (timeStep) => {
             if(!this.gameOverTimer){
                 let img = document.getElementsByClassName('you-died-img')[0].id = 'you-died-img-displayed';
-                let audio = document.getElementById('you-died-audio');
-                audio.volume = 0.025;
-                audio.play();
+                if(this.parent.volume){
+                    let audio = document.getElementById('you-died-audio');
+                    audio.volume = 0.025;
+                    audio.play();
+                }
             }
             this.run(timeStep);
         }

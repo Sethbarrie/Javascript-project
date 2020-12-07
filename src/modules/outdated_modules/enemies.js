@@ -74,44 +74,6 @@ class Enemy extends MovingObject{
             this.swinging = false;
         };
     }
-
-    // dead(ctx){
-    //     // debugger
-    //     if(this.delete === true){return}
-    //     if(this.animationBuffer > 0){
-    //         this.animationBuffer -= 1;
-    //         this.sprite.draw(
-    //             ctx,
-    //             this.status,
-    //             this.animationFrame,
-    //             this.x,
-    //             this.y,
-    //             this.width,
-    //             this.height,
-    //             this.inverted
-    //         )        } else {
-    //         if(this.animationFrame === this.status.frames.length - 1){
-    //             this.delete = true;
-    //             this.x = 0;
-    //             this.y = 0;
-    //             this.width = 0;
-    //             this.height = 0;
-    //         }
-    //         this.animationFrame = ((this.animationFrame + 1));
-    //         this.animationBuffer = this.animationBufferReset;
-    //         this.sprite.draw(
-    //             ctx,
-    //             this.status,
-    //             this.animationFrame,
-    //             this.x,
-    //             this.y,
-    //             this.width,
-    //             this.height,
-    //             this.inverted
-    //         )
-    //     }
-    // }
-
 }
 
 export default Enemy

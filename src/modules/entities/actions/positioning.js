@@ -130,7 +130,6 @@ class Positioning{
     }
     
     movingAnimation(){
-        debugger;
         if(this.x_velocity === 0){
             return false;
         }
