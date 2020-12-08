@@ -15,7 +15,7 @@
 body{
     min-width: 1850px;
     max-width: 100vw;
-    min-height: 850px;
+    min-height: 820px;
     max-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -24,6 +24,37 @@ body{
     background-image: url(./images/full-background.jpg);
     background-size: cover;
 }
+
+.ending-credits{
+    display: none;
+}
+
+.ending-credits span{
+    display: none;
+}
+
+#ending-credits{
+    display: block;
+    text-align: center;
+    position: absolute;
+    margin-left: 700px;
+    z-index: 20;
+    top: 190px;
+    min-width: 550px;
+    width: 550px;
+    max-width: 550px;
+    min-height: 350px;
+    height: 350px;
+    max-height: 350px;
+}
+
+#ending-credits span{
+    display: block;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    font-size: 25px;
+}
+
 
 #hidden-volume{
     display: none;
@@ -41,17 +72,39 @@ body{
 
 .hidden-game-canvas-displayed{
     position: absolute;
+    z-index: 5;
     height: 769px;
+    min-height: 769px;
     width: 1024px;
-    top: 0;
+    min-width: 1024px;
+    top: 50px; 
     left: auto;
     right: auto;
 }
 
 
-#game-canvas{
+.game-canvas{
     border: 2px solid white;
+    border-top-width: 3px ;
     background-image: url('./images/castle_background.jpg');
+    background-size: contain;
+    position: relative;
+    left: auto;
+    right: auto;
+    top: 0px;
+    z-index: 0;
+}
+
+#game-canvas-ending{
+    border: 2px solid white;
+    border-top-width: 3px ;
+    background-image: url('./images/castle_background_ending.jpg');
+    background-size: cover;
+    position: relative;
+    left: auto;
+    right: auto;
+    top: 0px;
+    z-index: 0;
 }
 
 #main-character-tileset,
@@ -66,12 +119,14 @@ body{
 .you-died-img{
     position: absolute;
     opacity: 0;
+    padding-top: 50px;
 }
 
 #you-died-img-displayed{
     height: 768px;
     width: 1024px;
     top: 0;
+    z-index: 10;
     left: auto;
     right: auto;
     opacity: 1;
@@ -85,6 +140,7 @@ body{
 /*     Do not touch above        */
 
 .top-container{
+    margin-top: 48px;
     width:100%;
     height: 100%;
     display: flex;
@@ -126,18 +182,18 @@ body{
 
 #right-button-container{
     width: 100%;
-    height: calc(100vh - 768px);
+    height: calc(100vh - 768px  - 80px);
 
 }
 
 #instruction-block{
     min-width: 1024px;
-    height: calc(100vh - 768px);
+    height: calc(100vh - 768px  - 80px);
 }
 
 #left-button-container{
     width: 100%;
-    height: calc(100vh - 768px);
+    height: calc(100vh - 768px - 80px);
     display: flex;
     justify-content: space-around;
     align-items: center;

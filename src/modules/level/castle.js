@@ -15,6 +15,7 @@ class Castle{
     constructor(parent){
         this.parent = parent;
         this.level = 0;
+        this.worldComplete = false;
         this.viewport = new Viewport(this.level);
         this.image = new Tilesheet(
             TILE_SIZE,
@@ -28,6 +29,28 @@ class Castle{
 
     update(entities){
         this.level = this.viewport.update(entities);
+        if(this.level === 4 && !this.worldComplete){
+            this.worldComplete = true;
+            let x = document.getElementsByClassName('game-canvas')[0];
+            x.id = 'game-canvas-ending';
+            let y = document.getElementsByClassName('ending-credits')[0];
+            y.id = 'ending-credits';
+
+            let z = document.getElementById('game-completion-time');
+            z.textContent = this.finalTime();
+        }
+    }
+
+    finalTime(){
+        let msTime = this.parent.parent.finalTime();
+        debugger;
+        let finishString = '';
+        let tempStr = Math.floor(Math.floor(msTime / 1000) / 60).toString();
+        finishString += tempStr < 10 ? '0' + tempStr.toString() : tempStr.toString();
+        finishString += ':';
+        tempStr = Math.floor(Math.floor((msTime / 1000)) % 60);
+        finishString += tempStr < 10 ? '0' + tempStr.toString() : tempStr.toString();
+        return finishString;
     }
 
     draw(ctx){

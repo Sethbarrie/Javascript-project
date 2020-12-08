@@ -7,7 +7,7 @@ export default class Timer {
         this.timeStep = timeStep;
         this.ctx = ctx
         this.gameOver = false;
-        this.gameOverTimer = 50;
+        this.gameOverTimer = 300;
 
         this.updated = false;
         this.update = update;
@@ -16,6 +16,7 @@ export default class Timer {
 
         this.run = (timeStamp) => {
             this.accumulatedTime += timeStamp - this.time;
+            this.totalTime += timeStamp;
             this.time = timeStamp;
 
             while(this.accumulatedTime >= this.timeStep){
@@ -37,15 +38,15 @@ export default class Timer {
             this.animationFrameRequest = window.requestAnimationFrame(this.handleRun);
         };
         this.handleRun = (timeStep) => {
-            if(!this.gameOverTimer){
-                let img = document.getElementsByClassName('you-died-img')[0].id = 'you-died-img-displayed';
-                if(this.parent.volume){
-                    let audio = document.getElementById('you-died-audio');
-                    audio.volume = 0.025;
-                    audio.play();
-                }
+            if(this.gameOverTimer < 250){
+                document.getElementsByClassName('you-died-img')[0].id = 'you-died-img-displayed';
+                let audio = document.getElementById('you-died-audio');
+                audio.volume = 0.025;
+                audio.play();
             }
-            this.run(timeStep);
+            if(this.gameOverTimer){
+                this.run(timeStep);
+            }
         }
     };
 

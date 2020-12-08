@@ -9,7 +9,8 @@ import Castle from '../level/castle';
 
 class Game {
     
-    constructor(){
+    constructor(parent){
+        this.parent = parent;
         this.enemies = [];
         this.mainCharacter = new Character(MAIN_CHARACTER);
         this.healthbar = new HealthBar();

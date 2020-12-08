@@ -20,16 +20,23 @@
 
     <div class='top-container'>
         <div id='left-block'>
-            <i class="material-icons">volume_up</i>
-            <i class="material-icons">volume_off</i>
             <p>The Tower Climb</p>
             <p></p>
+            <i class="material-icons">volume_up</i>
+            <i class="material-icons">volume_off</i>
             <p></p>
             <p></p>
             <p>The goal of the tower climb game is to climb the tower.</p>
             <p>Try not to die. . .</p>
         </div>
-        <canvas id="game-canvas" height="768" width="1024" background-img='./'></canvas>
+        <div class='ending-credits'>
+            <span>Congrats on beating the game! Stick around for more great content being added. Your completion time is:</span>
+            <br>
+            <span id='game-completion-time'></span>
+            <br>
+            <span>Can you beat the dev's best time of 0:35?</span>
+        </div>
+        <canvas class="game-canvas" height="768" width="1024" background-img='./'></canvas>
         <div id='right-block'>
             <p>Move around with WASD or the Arrow keys.</p>
             <p>Press Space to jump.</p>

@@ -6,7 +6,7 @@ import {
 
 document.addEventListener("DOMContentLoaded", () => {
     let img = document.getElementsByClassName('hidden-game-canvas-displayed')[0];
-    const canvasElement = document.getElementById("game-canvas");
+    const canvasElement = document.getElementsByClassName("game-canvas")[0];
     const ctx = canvasElement.getContext("2d");
     canvasElement.height = WINDOW_HEIGHT;
     canvasElement.width = WINDOW_WIDTH;
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.removeEventListener('click', start, false)
     }
     
-    let gameView = new GameView(canvasElement, ctx, this);
+    let gameView = new GameView(canvasElement, ctx, volume);
     
     document.addEventListener('click', start , false);
 
@@ -33,6 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
             location.reload();
         }
     })
+
+    const killVolume = () => {
+        initClick = false;
+        gameAudio.pause();
+    }
 
     let muted = document.getElementsByClassName('material-icons')[0];
     let unmuted = document.getElementsByClassName('material-icons')[1];
@@ -44,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if(initClick){
             gameAudio.play();
             volume = true;
+            gameView.volume = true;
             muted.id = 'hidden-volume';
             unmuted.id = 'visible-volume';
         }
@@ -52,8 +58,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if(initClick){
             gameAudio.pause();
             volume = false;
+            gameView.volume = false;
             unmuted.id = 'hidden-volume';
             muted.id = 'visible-volume';
         }
+    })
+    let audio = document.getElementById('you-died-audio');
+    audio.addEventListener('play', () => {
+        killVolume();
+        removeEventListener('play', killVolume);
     })
 });
