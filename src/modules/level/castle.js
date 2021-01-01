@@ -43,7 +43,6 @@ class Castle{
 
     finalTime(){
         let msTime = this.parent.parent.finalTime();
-        debugger;
         let finishString = '';
         let tempStr = Math.floor(Math.floor(msTime / 1000) / 60).toString();
         finishString += tempStr < 10 ? '0' + tempStr.toString() : tempStr.toString();

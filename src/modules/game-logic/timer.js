@@ -8,6 +8,8 @@ export default class Timer {
         this.ctx = ctx
         this.gameOver = false;
         this.gameOverTimer = 300;
+        let flag = false;
+        let secondflag = false;
 
         this.updated = false;
         this.update = update;
@@ -32,7 +34,14 @@ export default class Timer {
             }
 
             if(this.gameOver){
+                flag = true;
                 this.gameOverTimer -= 1;
+            }
+
+            if(flag && !secondflag){
+                let y = document.getElementsByClassName('ending-credits')[0];
+                y.id = null;
+                secondflag = true;
             }
 
             this.animationFrameRequest = window.requestAnimationFrame(this.handleRun);
