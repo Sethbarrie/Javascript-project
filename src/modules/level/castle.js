@@ -14,7 +14,7 @@ class Castle{
 
     constructor(parent){
         this.parent = parent;
-        this.level = 0;
+        this.level = 3;
         this.worldComplete = false;
         this.viewport = new Viewport(this.level);
         this.image = new Tilesheet(
@@ -38,6 +38,7 @@ class Castle{
 
             let z = document.getElementById('game-completion-time');
             z.textContent = this.finalTime();
+            this.parent.fireworks.start();
         }
     }
 

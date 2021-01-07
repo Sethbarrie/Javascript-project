@@ -6,6 +6,7 @@ import {
 } from '../variables/constants';
 import Character from '../entities/character';
 import Castle from '../level/castle';
+import Fireworks from '../fireworks/fireworks';
 
 class Game {
     
@@ -20,7 +21,8 @@ class Game {
         this.buffer = document.createElement('canvas');
         this.buffer.height = WINDOW_HEIGHT;
         this.buffer.width = WINDOW_WIDTH;
-        this.bufferCTX = this.buffer.getContext('2d');    
+        this.bufferCTX = this.buffer.getContext('2d');
+        this.fireworks = new Fireworks();    
     }
 
     update(timeStep){
@@ -30,6 +32,9 @@ class Game {
             enemy.update(timeStep);
         })
         this.castle.update([this.mainCharacter].concat(this.enemies));
+        if(this.fireworks.started){
+            this.fireworks.update(timeStep);
+        }
     }
     
     draw(ctx){
@@ -41,6 +46,9 @@ class Game {
             enemy.draw(this.bufferCTX);
         });
         this.healthbar.draw(this.bufferCTX,this.mainCharacter.totalHealth());
+        if(this.fireworks.started){
+            this.fireworks.draw(this.bufferCTX);
+        }
         this.bufferCTX.imageSmoothingEnabled = false;
         ctx.drawImage(this.buffer, 0, 0);
         if(this.mainCharacter.totalHealth() === 0){
