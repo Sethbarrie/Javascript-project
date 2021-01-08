@@ -160,6 +160,10 @@ body{
     height: 768px;
 }
 
+#left-block > .material-icons{
+    cursor: pointer;
+}
+
 #right-block{
     display: flex;
     flex-direction: column;
@@ -189,6 +193,9 @@ body{
 #instruction-block{
     min-width: 1024px;
     height: calc(100vh - 768px  - 80px);
+    /* margin-top: 10px;
+    background-color: black;
+    border: 2px solid white; */
 }
 
 #left-button-container{
